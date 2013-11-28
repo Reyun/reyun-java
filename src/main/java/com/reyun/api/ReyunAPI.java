@@ -841,7 +841,7 @@ public class ReyunAPI {
 	 * @param state
 	 *            任务状态，接受:TastState.a； 完成:TastState.c
 	 * @param type
-	 *            任务类型.
+	 *            任务类型.main：主线任务，new:主线，sub支线
 	 * @param serverid
 	 *            服务器编号.
 	 * @param channelid
@@ -874,7 +874,7 @@ public class ReyunAPI {
 	 * @param state
 	 *            任务状态，接受:TastState.a； 完成:TastState.c
 	 * @param type
-	 *            任务类型.
+	 *            任务类型. main：主线任务，new:主线，sub支线
 	 * @param serverid
 	 *            服务器编号.
 	 * @param channelid
@@ -897,7 +897,7 @@ public class ReyunAPI {
 	 * @param state
 	 *            任务状态，接受:TastState.a； 完成:TastState.c
 	 * @param type
-	 *            任务类型.
+	 *            任务类型. main：主线任务，new:主线，sub支线
 	 * @param serverid
 	 *            服务器编号.
 	 * @throws IOException
@@ -917,7 +917,7 @@ public class ReyunAPI {
 	 * @param state
 	 *            任务状态，接受:TastState.a； 完成:TastState.c
 	 * @param type
-	 *            任务类型.
+	 *            任务类型.  main：主线任务，new:主线，sub支线
 	 * @throws IOException
 	 */
 	public void task(String who, String id, TaskState state, String type)
