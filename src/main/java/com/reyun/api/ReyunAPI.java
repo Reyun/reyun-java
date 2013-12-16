@@ -185,6 +185,8 @@ public class ReyunAPI {
 	 * 
 	 * @param who
 	 *            用户ID.
+	 * @param accountType
+	 *            账户类型
 	 * @param serverid
 	 *            服务器编号.
 	 * @param channelid
@@ -193,10 +195,11 @@ public class ReyunAPI {
 	 *            Gender.f 代表女，Gender.m 代表男，Gender.o 代表其它.
 	 * @throws IOException
 	 */
-	public void reged(String who, String serverid, String channelid,
-			Gender gender) throws IOException {
+	public void reged(String who, String accountType, String serverid,
+			String channelid, Gender gender) throws IOException {
 		RYHashMap data = new RYHashMap();
 		data.put("who", who);
+		data.put("accountType", accountType);
 		data.put("serverid", serverid);
 		data.put("channelid", channelid);
 		data.put("gender", gender);
@@ -208,15 +211,17 @@ public class ReyunAPI {
 	 * 
 	 * @param who
 	 *            用户ID.
+	 * @param accountType
+	 *            账户类型
 	 * @param serverid
 	 *            服务器编号.
 	 * @param channelid
 	 *            渠道编号.
 	 * @throws IOException
 	 */
-	public void reged(String who, String serverid, String channelid)
-			throws IOException {
-		this.reged(who, serverid, channelid, Gender.o);
+	public void reged(String who, String accountType, String serverid,
+			String channelid) throws IOException {
+		this.reged(who, accountType, serverid, channelid, Gender.o);
 	}
 
 	/**
@@ -224,12 +229,28 @@ public class ReyunAPI {
 	 * 
 	 * @param who
 	 *            用户ID.
+	 * @param accountType
+	 *            账户类型
 	 * @param serverid
 	 *            服务器编号.
 	 * @throws IOException
 	 */
-	public void reged(String who, String serverid) throws IOException {
-		this.reged(who, serverid, _S_UNKNOWN_);
+	public void reged(String who, String accountType, String serverid)
+			throws IOException {
+		this.reged(who, accountType, serverid, _S_UNKNOWN_);
+	}
+
+	/**
+	 * 用户注册账户报送接口。
+	 * 
+	 * @param who
+	 *            用户ID.
+	 * @param accountType
+	 *            账户类型
+	 * @throws IOException
+	 */
+	public void reged(String who, String accountType) throws IOException {
+		this.reged(who, accountType, _S_UNKNOWN_);
 	}
 
 	/**
@@ -276,20 +297,20 @@ public class ReyunAPI {
 	 *            渠道编号.
 	 * @param level
 	 *            用户等级.
-	 * @param birthday
-	 *            2013-10-10.
+	 * @param age
+	 *            年齡.
 	 * @param gender
 	 *            Gender.f 代表女，Gender.m 代表男，Gender.o 代表其它.
 	 * @throws IOException
 	 */
 	public void loggedin(String who, String serverid, String channelid,
-			int level, String birthday, Gender gender) throws IOException {
+			int level, int age, Gender gender) throws IOException {
 		RYHashMap data = new RYHashMap();
 		data.put("who", who);
 		data.put("serverid", serverid);
 		data.put("channelid", channelid);
 		data.put("level", level);
-		data.put("birthday", birthday);
+		data.put("age", age);
 		data.put("gender", gender);
 		this.doHttpCall("loggedin", data);
 	}
@@ -305,13 +326,13 @@ public class ReyunAPI {
 	 *            渠道编号.
 	 * @param level
 	 *            用户等级.
-	 * @param birthday
-	 *            2013-10-10.
+	 * @param age
+	 *            年龄
 	 * @throws IOException
 	 */
 	public void loggedin(String who, String serverid, String channelid,
-			int level, String birthday) throws IOException {
-		this.loggedin(who, serverid, channelid, level, birthday, Gender.o);
+			int level, int age) throws IOException {
+		this.loggedin(who, serverid, channelid, level, age, Gender.o);
 	}
 
 	/**
@@ -329,7 +350,7 @@ public class ReyunAPI {
 	 */
 	public void loggedin(String who, String serverid, String channelid,
 			int level) throws IOException {
-		this.loggedin(who, serverid, channelid, level, _S_UNKNOWN_);
+		this.loggedin(who, serverid, channelid, level, _I_UNKNOWN_);
 	}
 
 	/**
@@ -596,135 +617,235 @@ public class ReyunAPI {
 	}
 
 	/**
-	 * 用户充值报送接口。
+	 * 用户充值报送接口
 	 * 
 	 * @param who
 	 *            用户ID.
-	 * @param amount
-	 *            用户成功充值，充值的金额
+	 * @param transactionId
+	 *            交易流水号
+	 * @param paymentType
+	 *            支付类型，例如支付宝，银联，苹果、谷歌官方等;如果是系统赠送的，paymentType为：FREE.
+	 * @param currencyType
+	 *            货币类型，按照国际标准组织ISO
+	 *            4217中规范的3位字母，例如CNY人民币、USD美金等，详情,http://zh.wikipedia
+	 *            .org/wiki/ISO_4217.
+	 * @param currencyAmount
+	 *            支付的真实货币的金额.
+	 * @param virtualCoinAmount
+	 *            通过充值获得的游戏内货币的数量
+	 * @param iapName
+	 *            游戏内购买道具的名称
+	 * @param iapAmount
+	 *            游戏内购买道具的数量
 	 * @param serverid
-	 *            服务器编号.
+	 *            服务器编号
 	 * @param channelid
-	 *            渠道编号.
+	 *            渠道编号
 	 * @param level
-	 *            用户等级.
-	 * @param birthday
-	 *            2013-10-10.
+	 *            用户等级
+	 * @param age
+	 *            年龄.
 	 * @param gender
-	 *            Gender.f 代表女，Gender.m 代表男，Gender.o 代表其它.
+	 *            f 代表女，m 代表男，o 代表其它.
 	 * @throws IOException
 	 */
-	public void payment(String who, int amount, String serverid,
-			String channelid, int level, String birthday, Gender gender)
-			throws IOException {
+	public void payment(String who, String transactionId, String paymentType,
+			String currencyType, int currencyAmount, int virtualCoinAmount,
+			String iapName, int iapAmount, String serverid, String channelid,
+			int level, int age, Gender gender) throws IOException {
 		RYHashMap data = new RYHashMap();
 		data.put("who", who);
-		data.put("amount", amount);
+		data.put("transactionId", transactionId);
+		data.put("paymentType", paymentType);
+		data.put("currencyType", currencyType);
+		data.put("currencyAmount", currencyAmount);
+		data.put("virtualCoinAmount", virtualCoinAmount);
+		data.put("iapName", iapName);
+		data.put("iapAmount", iapAmount);
 		data.put("serverid", serverid);
 		data.put("channelid", channelid);
 		data.put("level", level);
-		data.put("birthday", birthday);
+		data.put("age", age);
 		data.put("gender", gender);
 		this.doHttpCall("payment", data);
 	}
 
 	/**
-	 * 用户充值报送接口。
+	 * 用户充值报送接口
 	 * 
 	 * @param who
 	 *            用户ID.
-	 * @param amount
-	 *            用户成功充值，充值的金额
+	 * @param transactionId
+	 *            交易流水号
+	 * @param paymentType
+	 *            支付类型，例如支付宝，银联，苹果、谷歌官方等;如果是系统赠送的，paymentType为：FREE.
+	 * @param currencyType
+	 *            货币类型，按照国际标准组织ISO
+	 *            4217中规范的3位字母，例如CNY人民币、USD美金等，详情,http://zh.wikipedia
+	 *            .org/wiki/ISO_4217.
+	 * @param currencyAmount
+	 *            支付的真实货币的金额.
+	 * @param virtualCoinAmount
+	 *            通过充值获得的游戏内货币的数量
+	 * @param iapName
+	 *            游戏内购买道具的名称
+	 * @param iapAmount
+	 *            游戏内购买道具的数量
 	 * @param serverid
-	 *            服务器编号.
+	 *            服务器编号
 	 * @param channelid
-	 *            渠道编号.
+	 *            渠道编号
 	 * @param level
-	 *            用户等级.
-	 * @param birthday
-	 *            2013-10-10.
+	 *            用户等级
+	 * @param age
+	 *            年龄.
 	 * @throws IOException
 	 */
-	public void payment(String who, int amount, String serverid,
-			String channelid, int level, String birthday) throws IOException {
-		this.payment(who, amount, serverid, channelid, level, birthday,
-				Gender.o);
+	public void payment(String who, String transactionId, String paymentType,
+			String currencyType, int currencyAmount, int virtualCoinAmount,
+			String iapName, int iapAmount, String serverid, String channelid,
+			int level, int age) throws IOException {
+		this.payment(who, transactionId, paymentType, currencyType,
+				currencyAmount, virtualCoinAmount, iapName, iapAmount,
+				serverid, channelid, level, age, Gender.unknown);
 	}
 
 	/**
-	 * 用户充值报送接口。
+	 * 用户充值报送接口
 	 * 
 	 * @param who
 	 *            用户ID.
-	 * @param amount
-	 *            用户成功充值，充值的金额
+	 * @param transactionId
+	 *            交易流水号
+	 * @param paymentType
+	 *            支付类型，例如支付宝，银联，苹果、谷歌官方等;如果是系统赠送的，paymentType为：FREE.
+	 * @param currencyType
+	 *            货币类型，按照国际标准组织ISO
+	 *            4217中规范的3位字母，例如CNY人民币、USD美金等，详情,http://zh.wikipedia
+	 *            .org/wiki/ISO_4217.
+	 * @param currencyAmount
+	 *            支付的真实货币的金额.
+	 * @param virtualCoinAmount
+	 *            通过充值获得的游戏内货币的数量
+	 * @param iapName
+	 *            游戏内购买道具的名称
+	 * @param iapAmount
+	 *            游戏内购买道具的数量
 	 * @param serverid
-	 *            服务器编号.
+	 *            服务器编号
 	 * @param channelid
-	 *            渠道编号.
+	 *            渠道编号
+	 * @param level
+	 *            用户等级
 	 * @throws IOException
 	 */
-	public void payment(String who, int amount, String serverid,
-			String channelid, int level) throws IOException {
-		this.payment(who, amount, serverid, channelid, level, _S_UNKNOWN_);
+	public void payment(String who, String transactionId, String paymentType,
+			String currencyType, int currencyAmount, int virtualCoinAmount,
+			String iapName, int iapAmount, String serverid, String channelid,
+			int level) throws IOException {
+		this.payment(who, transactionId, paymentType, currencyType,
+				currencyAmount, virtualCoinAmount, iapName, iapAmount,
+				serverid, channelid, level, -1);
 	}
 
 	/**
-	 * 用户充值报送接口。
+	 * 用户充值报送接口
 	 * 
 	 * @param who
 	 *            用户ID.
-	 * @param amount
-	 *            用户成功充值，充值的金额
+	 * @param transactionId
+	 *            交易流水号
+	 * @param paymentType
+	 *            支付类型，例如支付宝，银联，苹果、谷歌官方等;如果是系统赠送的，paymentType为：FREE.
+	 * @param currencyType
+	 *            货币类型，按照国际标准组织ISO
+	 *            4217中规范的3位字母，例如CNY人民币、USD美金等，详情,http://zh.wikipedia
+	 *            .org/wiki/ISO_4217.
+	 * @param currencyAmount
+	 *            支付的真实货币的金额.
+	 * @param virtualCoinAmount
+	 *            通过充值获得的游戏内货币的数量
+	 * @param iapName
+	 *            游戏内购买道具的名称
+	 * @param iapAmount
+	 *            游戏内购买道具的数量
 	 * @param serverid
-	 *            服务器编号.
+	 *            服务器编号
 	 * @param channelid
-	 *            渠道编号.
+	 *            渠道编号
 	 * @throws IOException
 	 */
-	public void payment(String who, int amount, String serverid,
-			String channelid) throws IOException {
-		this.payment(who, amount, serverid, channelid, _I_UNKNOWN_);
-	}
-
-	/**
-	 * 用户充值报送接口。
-	 * 
-	 * @param who
-	 *            用户ID.
-	 * @param amount
-	 *            用户成功充值，充值的金额
-	 * @param serverid
-	 *            服务器编号.
-	 * @throws IOException
-	 */
-	public void payment(String who, int amount, String serverid)
+	public void payment(String who, String transactionId, String paymentType,
+			String currencyType, int currencyAmount, int virtualCoinAmount,
+			String iapName, int iapAmount, String serverid, String channelid)
 			throws IOException {
-		this.payment(who, amount, serverid, _S_UNKNOWN_);
+		this.payment(who, transactionId, paymentType, currencyType,
+				currencyAmount, virtualCoinAmount, iapName, iapAmount,
+				serverid, channelid, -1);
 	}
 
 	/**
-	 * 用户充值报送接口。
+	 * 用户充值报送接口
 	 * 
 	 * @param who
 	 *            用户ID.
-	 * @param amount
-	 *            用户成功充值，充值的金额
+	 * @param transactionId
+	 *            交易流水号
+	 * @param paymentType
+	 *            支付类型，例如支付宝，银联，苹果、谷歌官方等;如果是系统赠送的，paymentType为：FREE.
+	 * @param currencyType
+	 *            货币类型，按照国际标准组织ISO
+	 *            4217中规范的3位字母，例如CNY人民币、USD美金等，详情,http://zh.wikipedia
+	 *            .org/wiki/ISO_4217.
+	 * @param currencyAmount
+	 *            支付的真实货币的金额.
+	 * @param virtualCoinAmount
+	 *            通过充值获得的游戏内货币的数量
+	 * @param iapName
+	 *            游戏内购买道具的名称
+	 * @param iapAmount
+	 *            游戏内购买道具的数量
+	 * @param serverid
+	 *            服务器编号
 	 * @throws IOException
 	 */
-	public void payment(String who, int amount) throws IOException {
-		this.payment(who, amount, _S_UNKNOWN_);
+	public void payment(String who, String transactionId, String paymentType,
+			String currencyType, int currencyAmount, int virtualCoinAmount,
+			String iapName, int iapAmount, String serverid) throws IOException {
+		this.payment(who, transactionId, paymentType, currencyType,
+				currencyAmount, virtualCoinAmount, iapName, iapAmount,
+				serverid, _S_UNKNOWN_);
 	}
 
 	/**
-	 * 用户充值报送接口。
+	 * 用户充值报送接口
 	 * 
 	 * @param who
 	 *            用户ID.
+	 * @param transactionId
+	 *            交易流水号
+	 * @param paymentType
+	 *            支付类型，例如支付宝，银联，苹果、谷歌官方等;如果是系统赠送的，paymentType为：FREE.
+	 * @param currencyType
+	 *            货币类型，按照国际标准组织ISO
+	 *            4217中规范的3位字母，例如CNY人民币、USD美金等，详情,http://zh.wikipedia
+	 *            .org/wiki/ISO_4217.
+	 * @param currencyAmount
+	 *            支付的真实货币的金额.
+	 * @param virtualCoinAmount
+	 *            通过充值获得的游戏内货币的数量
+	 * @param iapName
+	 *            游戏内购买道具的名称
+	 * @param iapAmount
+	 *            游戏内购买道具的数量
 	 * @throws IOException
 	 */
-	public void payment(String who) throws IOException {
-		this.payment(who, _I_UNKNOWN_);
+	public void payment(String who, String transactionId, String paymentType,
+			String currencyType, int currencyAmount, int virtualCoinAmount,
+			String iapName, int iapAmount) throws IOException {
+		this.payment(who, transactionId, paymentType, currencyType,
+				currencyAmount, virtualCoinAmount, iapName, iapAmount,
+				_S_UNKNOWN_);
 	}
 
 	/**
@@ -748,15 +869,14 @@ public class ReyunAPI {
 	 *            用户等级.
 	 * @throws IOException
 	 */
-	public void economy(String who, String name, int num, int totalprice,
-			EconomyType type, String serverid, String channelid, int level)
+	public void economy(String who, String itemName, int itemAmount,
+			int itemTotalPrice, String serverid, String channelid, int level)
 			throws IOException {
 		RYHashMap data = new RYHashMap();
 		data.put("who", who);
-		data.put("name", name);
-		data.put("num", num);
-		data.put("totalprice", totalprice);
-		data.put("type", type);
+		data.put("name", itemName);
+		data.put("num", itemAmount);
+		data.put("totalprice", itemTotalPrice);
 		data.put("serverid", serverid);
 		data.put("channelid", channelid);
 		data.put("level", level);
@@ -782,11 +902,11 @@ public class ReyunAPI {
 	 *            渠道编号.
 	 * @throws IOException
 	 */
-	public void economy(String who, String name, int num, int totalprice,
-			EconomyType type, String serverid, String channelid)
+	public void economy(String who, String itemName, int itemAmount,
+			int itemTotalPrice, String serverid, String channelid)
 			throws IOException {
-		this.economy(who, name, num, totalprice, type, serverid, channelid,
-				_I_UNKNOWN_);
+		this.economy(who, itemName, itemAmount, itemTotalPrice, serverid,
+				channelid, _I_UNKNOWN_);
 	}
 
 	/**
@@ -806,9 +926,10 @@ public class ReyunAPI {
 	 *            服务器编号.
 	 * @throws IOException
 	 */
-	public void economy(String who, String name, int num, int totalprice,
-			EconomyType type, String serverid) throws IOException {
-		this.economy(who, name, num, totalprice, type, serverid, _S_UNKNOWN_);
+	public void economy(String who, String itemName, int itemAmount,
+			int itemTotalPrice, String serverid) throws IOException {
+		this.economy(who, itemName, itemAmount, itemTotalPrice, serverid,
+				_S_UNKNOWN_);
 	}
 
 	/**
@@ -826,9 +947,9 @@ public class ReyunAPI {
 	 *            用户此次虚拟交易的类型,系统产出:Economy.sp 购买获得:Economy.bp 消费:Economy.c .
 	 * @throws IOException
 	 */
-	public void economy(String who, String name, int num, int totalprice,
-			EconomyType type) throws IOException {
-		this.economy(who, name, num, totalprice, type, _S_UNKNOWN_);
+	public void economy(String who, String itemName, int itemAmount,
+			int itemTotalPrice) throws IOException {
+		this.economy(who, itemName, itemAmount, itemTotalPrice, _S_UNKNOWN_);
 	}
 
 	/**
@@ -917,7 +1038,7 @@ public class ReyunAPI {
 	 * @param state
 	 *            任务状态，接受:TastState.a； 完成:TastState.c
 	 * @param type
-	 *            任务类型.  main：主线任务，new:主线，sub支线
+	 *            任务类型. main：主线任务，new:主线，sub支线
 	 * @throws IOException
 	 */
 	public void task(String who, String id, TaskState state, String type)
@@ -1014,54 +1135,23 @@ public class ReyunAPI {
 	private RYHashMap profiles = new RYHashMap();
 
 	private final String mEventsEndpoint;
-	private final String _S_UNKNOWN_ = "unknown";
-	private final int _I_UNKNOWN_ = -1;
 	private final int BUFFER_SIZE = 50;
+
+	public final String _S_UNKNOWN_ = "unknown";
+	public final int _I_UNKNOWN_ = -1;
 
 	/**
 	 * f 代表女，m 代表男，o 代表其它.
 	 */
-	private enum Gender {
-		f, m, o;
-	}
-
-	/**
-	 * 用户此次虚拟交易的类型,系统产出:sp 购买获得:bp 消费:c .
-	 */
-	private enum EconomyType {
-		sp, bp, c;
+	public enum Gender {
+		f, m, o, unknown;
 	}
 
 	/**
 	 * 任务当前状况,完成:a 接受:c.
 	 */
-	private enum TaskState {
-		a, c;
+	public enum TaskState {
+		a, c, f;
 	}
 
-	public static void main(String[] args) throws IOException {
-		String who = "Sylar";
-		String serverid = "测试一服";
-		String channelid = "appstore";
-
-		ReyunAPI api = new ReyunAPI("1edf4b9540a5e83c0febf1f4ac407224");
-		api.profile("+8", "大黄蜂", "qweqweadfasdqw", "cmcc", "WIFI",
-				"android 4.4", "480*320");
-		api.install(channelid);
-		api.startup(channelid);
-		api.reged(who, serverid, channelid);
-		api.loggedin(who, serverid, channelid);
-		api.heartbeat(who, serverid, channelid);
-		api.session(who, serverid, channelid, "2013-10-10 15:43:22",
-				"2013-10-10 16:22:01", 1024);
-
-		Map extra = new HashMap();
-		extra.put("haha", 99);
-		extra.put("java", "asdf");
-		api.event(who, "javaclient", extra, serverid, channelid);
-		api.payment(who, 50, serverid, channelid, 2, "2001-10-10", Gender.m);
-		api.economy(who, "xxx", 10, 1000, EconomyType.bp, serverid, channelid,
-				3);
-		api.task(who, "第一关", TaskState.a, serverid, channelid, "xxx", 1);
-	}
 }
