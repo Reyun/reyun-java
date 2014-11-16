@@ -105,7 +105,7 @@ public class ReyunAPI {
 			
 			post.setHeader("Content-Type", "application/json;charset=utf8");
 			
-			StringEntity se = new StringEntity(model.toJSONString());
+			StringEntity se = new StringEntity(model.toString());
 			
 			post.setEntity(se);
 			HttpResponse response = client.execute(post);
