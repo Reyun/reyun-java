@@ -3,7 +3,6 @@ package com.reyun.api;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.alibaba.fastjson.JSON;
 import com.reyun.api.model.Event;
 import com.reyun.api.model.Install;
 
@@ -17,20 +16,12 @@ public class ReyunAPITest {
 	}
 	
 	@Test
-	public void fastJSONTest() {
-		Install  install = api.createInstall();
-//		install.setWho("testwho");
-//		install.setChannelid("testchannel");
-		install.setDeviceid("testdevice");
-		install.setChannelid("channelid");
-		System.out.println(JSON.toJSONString(install));
-	}
-	
-	@Test
 	public void installTest() {
 		Install install = api.createInstall();
 		install.setDeviceid("1");
-		api.request(install);
+		install.setChannelid("testchannel");
+		System.out.println(install);
+//		api.request(install);
 	}
 	
 	@Test
@@ -69,7 +60,7 @@ public class ReyunAPITest {
 //		install.setWho("testwho");
 //		install.setChannelid("testchannel");
 		event.setWhat("testdevice");
-		System.out.println(JSON.toJSONString(event));
+		System.out.println(event);
 	}
 	
 	@Test
