@@ -1,6 +1,6 @@
 package com.reyun.api.model;
 
-import com.reyun.api.ReyunAPI.QuestStatus;
+import com.reyun.api.enumeration.QuestStatus;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 

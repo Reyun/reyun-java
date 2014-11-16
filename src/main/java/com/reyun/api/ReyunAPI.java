@@ -11,8 +11,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
 
-import com.alibaba.fastjson.JSON;
 import com.reyun.api.exception.AppidNotValidException;
+import com.reyun.api.exception.SystemException;
 import com.reyun.api.model.Economy;
 import com.reyun.api.model.Event;
 import com.reyun.api.model.Heartbeat;
@@ -27,33 +27,16 @@ import com.reyun.api.util.ValidateUtil;
 
 /**
  * 
- * @author ruijie liruijie0603@126.com
+ * @author ruijie liruijie@reyun.com
  * @date 2014-11-14
  */
 public class ReyunAPI {
 
 	private Logger log = Logger.getLogger(ReyunAPI.class);
 	
-	public final String _S_UNKNOWN_ = "unknown";
-	public final int _I_UNKNOWN_ = -1;
-
 	private String appkey;
 
 	private final String mEventsEndpoint;
-
-	/**
-	 * f 代表女，m 代表男，o 代表其它.
-	 */
-	public enum Gender {
-		f, m, o, unknown;
-	}
-
-	/**
-	 * 任务当前状况,完成:a 接受:c.
-	 */
-	public enum QuestStatus {
-		a, c, f;
-	}
 
 	private static ReyunAPI instance;
 	
@@ -115,8 +98,6 @@ public class ReyunAPI {
 	
 	public void request(Model model) {
 		try {
-			model.validate();
-			
 			CloseableHttpClient client = HttpClients.createDefault();
 			String url = mEventsEndpoint + model.method();
 			HttpPost post = new HttpPost(url);
@@ -124,22 +105,18 @@ public class ReyunAPI {
 			
 			post.setHeader("Content-Type", "application/json;charset=utf8");
 			
-			StringEntity se = new StringEntity(JSON.toJSONString(model));
+			StringEntity se = new StringEntity(model.toJSONString());
 			
 			post.setEntity(se);
-//			log.info(dataString);
 			HttpResponse response = client.execute(post);
 //			log.info(model.getWhat() + "[" + response.getStatusLine().getStatusCode() + "]:"
 //					+ EntityUtils.toString(response.getEntity()));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SystemException(e.getMessage(), e);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SystemException(e.getMessage(), e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SystemException(e.getMessage(), e);
 		}
 	}
 }

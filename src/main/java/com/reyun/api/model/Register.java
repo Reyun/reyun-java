@@ -1,6 +1,6 @@
 package com.reyun.api.model;
 
-import com.reyun.api.ReyunAPI.Gender;
+import com.reyun.api.enumeration.Gender;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
