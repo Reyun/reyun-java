@@ -26,11 +26,12 @@ public abstract class Model {
 	
 	protected abstract void validate();
 	
-	public String toJSONString() {
+	@Override
+	public String toString() {
 		validate();
 		return JSON.toJSONString(this);
 	}
-	
+
 	/**
 	 * 设置设备id
 	 * @param deviceid
