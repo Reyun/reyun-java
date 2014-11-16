@@ -103,7 +103,7 @@ public class Payment extends Model {
 	}
 
 	@Override
-	public void validate() {
+	protected void validate() {
 		if (!ValidateUtil.isValid(who)) {
 			throw new ParamRequiredException("who must be set in payment");
 		}

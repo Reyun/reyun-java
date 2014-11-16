@@ -19,7 +19,7 @@ public class Install extends Model {
 	}
 
 	@Override
-	public void validate() {
+	protected void validate() {
 		if (!ValidateUtil.isValid(context.get("deviceid"))) {
 			throw new ParamRequiredException("deviceid must be set in install");
 		}

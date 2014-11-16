@@ -3,6 +3,7 @@ package com.reyun.api.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.reyun.api.util.ValidateUtil;
 
 public abstract class Model {
@@ -23,7 +24,12 @@ public abstract class Model {
 		this.appid = appid;
 	}
 	
-	public abstract void validate();
+	protected abstract void validate();
+	
+	public String toJSONString() {
+		validate();
+		return JSON.toJSONString(this);
+	}
 	
 	/**
 	 * 设置设备id
