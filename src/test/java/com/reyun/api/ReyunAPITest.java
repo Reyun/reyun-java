@@ -1,5 +1,7 @@
 package com.reyun.api;
 
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +29,9 @@ public class ReyunAPITest {
 		api = ReyunAPI.getInstance("1edf4b9540a5e83c0febf1f4ac407224");
 	}
 	
+	/**
+	 * 玩家首次打开应用统计测试
+	 */
 	@Test
 	public void installTest() {
 		Install install = api.createInstall();
@@ -37,10 +42,19 @@ public class ReyunAPITest {
 		// unrequired parameters
 		install.setChannelid("appstore");
 		
-		System.out.println(install);
-		api.request(install);
+		Result result = api.post(install);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家打开应用统计测试
+	 */
 	@Test
 	public void startupTest() {
 		Startup startup = api.createStartup();
@@ -57,10 +71,19 @@ public class ReyunAPITest {
 		startup.setOS("ios");
 		startup.setResolution("800*600");
 		
-		System.out.println(startup);
-		api.request(startup);
+		Result result = api.post(startup);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家服务器注册统计测试
+	 */
 	@Test
 	public void registerTest() {
 		Register register = api.createRegister();
@@ -76,10 +99,19 @@ public class ReyunAPITest {
 		register.setServerid("测试一服");
 		register.setChannelid("appstore");
 		
-		System.out.println(register);
-		api.request(register);
+		Result result = api.post(register);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家登陆统计测试
+	 */
 	@Test
 	public void loggedinTest() {
 		Loggedin loggedin = api.createLoggedin();
@@ -93,10 +125,19 @@ public class ReyunAPITest {
 		loggedin.setChannelid("appstore");
 		loggedin.setLevel(11);
 		
-		System.out.println(loggedin);
-		api.request(loggedin);
+		Result result = api.post(loggedin);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家充值统计测试
+	 */
 	@Test
 	public void paymentTest() {
 		Payment payment = api.createPayment();
@@ -117,10 +158,19 @@ public class ReyunAPITest {
 		payment.setChannelid("appstore");
 		payment.setLevel(11);
 		
-		System.out.println(payment);
-		api.request(payment);
+		Result result = api.post(payment);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家游戏内虚拟交易统计测试
+	 */
 	@Test
 	public void economyTest() {
 		Economy economy = api.createEconomy();
@@ -137,10 +187,19 @@ public class ReyunAPITest {
 		economy.setChannelid("appstore");
 		economy.setLevel(11);
 		
-		System.out.println(economy);
-		api.request(economy);
+		Result result = api.post(economy);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家的任务/关卡/副本统计测试
+	 */
 	@Test
 	public void questTest() {
 		Quest quest = api.createQuest();
@@ -157,10 +216,19 @@ public class ReyunAPITest {
 		quest.setChannelid("appstore");
 		quest.setLevel(11);
 		
-		System.out.println(quest);
-		api.request(quest);
+		Result result = api.post(quest);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家自定义事件统计测试
+	 */
 	@Test
 	public void eventTest() {
 		Event  event = api.createEvent();
@@ -180,10 +248,19 @@ public class ReyunAPITest {
 		
 		event.setUserDefine(extra);
 		
-		System.out.println(event);
-		api.request(event);
+		Result result = api.post(event);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 	
+	/**
+	 * 玩家在线统计测试
+	 */
 	@Test
 	public void heartbeatTest() {
 		Heartbeat heartbeat = api.createHeartbeat();
@@ -197,7 +274,13 @@ public class ReyunAPITest {
 		heartbeat.setChannelid("appstore");
 		heartbeat.setLevel(11);
 		
-		System.out.println(heartbeat);
-		api.request(heartbeat);
+		Result result = api.post(heartbeat);
+		
+		assertTrue(result.getStatus());
+		assertEquals(200, result.getHttpcode());
+		
+		System.out.println("requesturl: " + result.getRequestUrl());
+		System.out.println("requestjson: " + result.getRequest());
+		System.out.println("responsejson: " + result.getResponse());
 	}
 }

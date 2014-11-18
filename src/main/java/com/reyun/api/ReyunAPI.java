@@ -9,8 +9,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.log4j.Logger;
+import org.apache.http.util.EntityUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.reyun.api.exception.AppidNotValidException;
 import com.reyun.api.exception.SystemException;
 import com.reyun.api.model.Economy;
@@ -32,11 +34,9 @@ import com.reyun.api.util.ValidateUtil;
  */
 public class ReyunAPI {
 
-	private Logger log = Logger.getLogger(ReyunAPI.class);
-	
 	private String appkey;
 
-	private final String mEventsEndpoint;
+	private final String mEventsEndpoint = "http://log.reyun.com/receive/rest/";
 
 	private static ReyunAPI instance;
 	
@@ -50,7 +50,6 @@ public class ReyunAPI {
 			throw new AppidNotValidException();
 		}
 		this.appkey = appkey;
-		mEventsEndpoint = Config.BASE_ENDPOINT + "rest/";
 	}
 	
 	public static ReyunAPI getInstance(String appkey) {
@@ -96,21 +95,46 @@ public class ReyunAPI {
 		return new Heartbeat(appkey);
 	}
 	
-	public void request(Model model) {
+	/**
+	 * 数据报送
+	 * @param model
+	 * @return Result
+	 * 			requestUrl	请求url
+	 * 			request		请求
+	 * 			httpcode	http状态码
+	 * 			status		数据报送是否成功
+	 * 			response	服务端返回
+	 */
+	public Result post(Model model) {
+		Result result = new Result();
 		try {
 			CloseableHttpClient client = HttpClients.createDefault();
 			String url = mEventsEndpoint + model.method();
-			HttpPost post = new HttpPost(url);
-			log.info(url);
 			
+			HttpPost post = new HttpPost(url);
 			post.setHeader("Content-Type", "application/json;charset=utf8");
 			
-			StringEntity se = new StringEntity(model.toString());
-			
+			String request = model.toString();
+			StringEntity se = new StringEntity(request);
 			post.setEntity(se);
 			HttpResponse response = client.execute(post);
-//			log.info(model.getWhat() + "[" + response.getStatusLine().getStatusCode() + "]:"
-//					+ EntityUtils.toString(response.getEntity()));
+			
+			String responseStr = EntityUtils.toString(response.getEntity());
+			
+			JSONObject responseJSON = JSON.parseObject(responseStr);
+			
+			result.setRequestUrl(url);
+			result.setRequest(request);
+			result.setHttpcode(response.getStatusLine().getStatusCode());
+			result.setResponse(responseStr);
+			
+			if (responseJSON.getIntValue("status") == 0) {
+				result.setStatus(true);
+			} else {
+				result.setStatus(false);
+			}
+			
+			return result;
 		} catch (UnsupportedEncodingException e) {
 			throw new SystemException(e.getMessage(), e);
 		} catch (ClientProtocolException e) {
