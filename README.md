@@ -26,7 +26,7 @@ mvn clean compile assembly:single
 `源码编译打包需要maven 3.0+支持`
 
 # sdk使用
-```
+```java
 // 获得reyunapi实例
 ReyunAPI api = ReyunAPI.getInstance("1edf4b9540a5e83c0febf1f4ac407224");
 
