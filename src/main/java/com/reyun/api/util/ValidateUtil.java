@@ -50,7 +50,7 @@ public class ValidateUtil {
 	/**
 	 * 判断对象有效性
 	 * @param obj
-	 * @return
+	 * @return boolean
 	 */
 	public static boolean isValid(Object obj){
 		if(obj == null ){
