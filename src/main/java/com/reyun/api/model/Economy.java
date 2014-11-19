@@ -20,7 +20,7 @@ public class Economy extends Model {
 	
 	/**
 	 * 设置游戏内虚拟物品名称/ID
-	 * @param transactionid
+	 * @param itemname
 	 */
 	public void setItemname(String itemname) {
 		context.put("itemname", itemname);
