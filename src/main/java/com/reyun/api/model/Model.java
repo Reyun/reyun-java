@@ -4,10 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.reyun.api.Result;
+import com.reyun.api.Sender;
+import com.reyun.api.exception.ConnectionException;
+import com.reyun.api.exception.TimeoutException;
 import com.reyun.api.util.ValidateUtil;
 
 public abstract class Model {
 
+	private Sender sender;
+	
 	protected String appid;
 	
 	protected String when;
@@ -20,8 +26,9 @@ public abstract class Model {
 	
 	protected Map<String, String> context = new HashMap<String, String>();
 	
-	protected Model(String appid) {
+	protected Model(String appid, Sender sender) {
 		this.appid = appid;
+		this.sender = sender;
 	}
 	
 	protected abstract void validate();
@@ -32,18 +39,6 @@ public abstract class Model {
 		return JSON.toJSONString(this);
 	}
 
-	/**
-	 * 设置设备id
-	 * @param deviceid
-	 */
-	public void setDeviceid(String deviceid) {
-		context.put("deviceid", deviceid);
-	}
-	
-	public void setWhen(String when) {
-		this.when = when;
-	}
-	
 	public String method() {
 		return where;
 	}
@@ -70,5 +65,18 @@ public abstract class Model {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * 数据报送
+	 * @param model
+	 * @return Result
+	 * 			status		数据报送是否成功
+	 * 			message		返回信息
+	 * @throws ConnectionException
+	 * @throws TimeoutException
+	 */
+	public Result post() throws ConnectionException, TimeoutException {
+		return sender.post(this);
 	}
 }

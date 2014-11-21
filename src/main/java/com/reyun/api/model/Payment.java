@@ -1,29 +1,52 @@
 package com.reyun.api.model;
 
+import com.reyun.api.Sender;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
 public class Payment extends Model {
 
-	public Payment(String appid) {
-		super(appid);
+	public Payment(String appid, Sender sender) {
+		super(appid, sender);
 		this.where = "payment";
+	}
+	
+	/**
+	 * 设置设备id
+	 * @param deviceid
+	 */
+	public Payment setDeviceid(String deviceid) {
+		context.put("deviceid", deviceid);
+		return this;
+	}
+	
+	/**
+	 * 设置时间
+	 * 		yyyy-MM-dd HH:mm:ss
+	 * @param when
+	 * @return
+	 */
+	public Payment setWhen(String when) {
+		this.when = when;
+		return this;
 	}
 	
 	/**
 	 * 设置账户ID
 	 * @param who
 	 */
-	public void setWho(String who) {
+	public Payment setWho(String who) {
 		this.who = who;
+		return this;
 	}
 	
 	/**
 	 * 设置交易的流水号
 	 * @param transactionid
 	 */
-	public void setTransactionid(String transactionid) {
+	public Payment setTransactionid(String transactionid) {
 		context.put("transactionid", transactionid);
+		return this;
 	}
 	
 	/**
@@ -32,8 +55,9 @@ public class Payment extends Model {
 	 * 		如果是系统赠送则为free
 	 * @param paymenttype
 	 */
-	public void setPaymenttype(String paymenttype) {
+	public Payment setPaymenttype(String paymenttype) {
 		context.put("paymenttype", paymenttype);
+		return this;
 	}
 	
 	/**
@@ -42,64 +66,72 @@ public class Payment extends Model {
 	 * 		如CNY人民币,USD美金
 	 * @param currencytype
 	 */
-	public void setCurrencytype(String currencytype) {
+	public Payment setCurrencytype(String currencytype) {
 		context.put("currencytype", currencytype);
+		return this;
 	}
 	
 	/**
 	 * 设置支付金额
 	 * @param currencyamount
 	 */
-	public void setCurrencyamount(String currencyamount) {
+	public Payment setCurrencyamount(String currencyamount) {
 		context.put("currencyamount", currencyamount);
+		return this;
 	}
 	
 	/**
 	 * 设置通过充值获得的游戏内货币数量
 	 * @param virtualcoinamount
 	 */
-	public void setVirtualcoinamount(String virtualcoinamount) {
+	public Payment setVirtualcoinamount(String virtualcoinamount) {
 		context.put("virtualcoinamount", virtualcoinamount);
+		return this;
 	}
 	
 	/**
 	 * 设置游戏内购买道具的名称
 	 * @param iapname
 	 */
-	public void setIapname(String iapname) {
+	public Payment setIapname(String iapname) {
 		context.put("iapname", iapname);
+		return this;
 	}
 	
 	/**
 	 * 设置游戏内购买道具的数量
 	 * @param iapamount
 	 */
-	public void setIapamount(String iapamount) {
+	public Payment setIapamount(String iapamount) {
 		context.put("iapamount", iapamount);
+		return this;
 	}
 	
 	/**
 	 * 设置服务器id
 	 * @param serverid
 	 */
-	public void setServerid(String serverid) {
+	public Payment setServerid(String serverid) {
 		context.put("serverid", serverid);
+		return this;
 	}
 	
 	/**
 	 * 设置渠道id
 	 * @param channelid
 	 */
-	public void setChannelid(String channelid) {
+	public Payment setChannelid(String channelid) {
 		context.put("channelid", channelid);
+		return this;
 	}
 	
 	/**
 	 * 设置账户等级
 	 * @param level
 	 */
-	public void setLevel(int level) {
+	public Payment setLevel(int level) {
 		context.put("level", String.valueOf(level));
+		return this;
 	}
 
 	@Override

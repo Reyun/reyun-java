@@ -1,69 +1,97 @@
 package com.reyun.api.model;
 
+import com.reyun.api.Sender;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
 public class Economy extends Model {
 
-	public Economy(String appid) {
-		super(appid);
+	public Economy(String appid, Sender sender) {
+		super(appid, sender);
 		this.where = "economy";
+	}
+	
+	/**
+	 * 设置设备id
+	 * @param deviceid
+	 */
+	public Economy setDeviceid(String deviceid) {
+		context.put("deviceid", deviceid);
+		return this;
+	}
+	
+	/**
+	 * 设置时间
+	 * 		yyyy-MM-dd HH:mm:ss
+	 * @param when
+	 * @return
+	 */
+	public Economy setWhen(String when) {
+		this.when = when;
+		return this;
 	}
 	
 	/**
 	 * 设置账户ID
 	 * @param who
 	 */
-	public void setWho(String who) {
+	public Economy setWho(String who) {
 		this.who = who;
+		return this;
 	}
 	
 	/**
 	 * 设置游戏内虚拟物品名称/ID
 	 * @param itemname
 	 */
-	public void setItemname(String itemname) {
+	public Economy setItemname(String itemname) {
 		context.put("itemname", itemname);
+		return this;
 	}
 	
 	/**
 	 * 设置交易的数量
 	 * @param itemamount
 	 */
-	public void setItemamount(String itemamount) {
+	public Economy setItemamount(String itemamount) {
 		context.put("itemamount", itemamount);
+		return this;
 	}
 	
 	/**
 	 * 设置交易的总价
 	 * @param itemtotalprice
 	 */
-	public void setItemtotalprice(String itemtotalprice) {
+	public Economy setItemtotalprice(String itemtotalprice) {
 		context.put("itemtotalprice", itemtotalprice);
+		return this;
 	}
 	
 	/**
 	 * 设置服务器id
 	 * @param serverid
 	 */
-	public void setServerid(String serverid) {
+	public Economy setServerid(String serverid) {
 		context.put("serverid", serverid);
+		return this;
 	}
 	
 	/**
 	 * 设置渠道id
 	 * @param channelid
 	 */
-	public void setChannelid(String channelid) {
+	public Economy setChannelid(String channelid) {
 		context.put("channelid", channelid);
+		return this;
 	}
 	
 	/**
 	 * 设置账户等级
 	 * @param level
 	 */
-	public void setLevel(int level) {
+	public Economy setLevel(int level) {
 		context.put("level", String.valueOf(level));
+		return this;
 	}
 
 	@Override
