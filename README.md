@@ -21,9 +21,14 @@
 
 > * 在玩家首次进入某个服务器调用，报送register接口数据（也就是说每次进入新服都需要发送register接口，并且同时发送loggedin接口）, 要确保参数who不能为空（有平台的记录平台ID，没有平台的只要用户ID唯一就可以了，也就是用户进所有服务器只有一个ID） 。用户每进入一个新服发送且仅发送一次register。
 
-# sdk打包
-mvn clean compile assembly:single  
-`源码编译打包需要maven 3.0+支持`
+# Maven
+```xml
+<dependency>
+    <groupId>com.reyun</groupId>
+    <artifactId>reyun-java</artifactId>
+    <version>2.1.0</version>
+</dependency>
+```
 
 # sdk使用
 ## 报送数据至rest接口
