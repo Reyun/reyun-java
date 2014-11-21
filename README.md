@@ -26,24 +26,56 @@ mvn clean compile assembly:single
 `源码编译打包需要maven 3.0+支持`
 
 # sdk使用
+## 报送数据至rest接口
 ```java
-// 获得reyunapi实例
+// 获得报送rest接口的ReyunAPI实例
 ReyunAPI api = ReyunAPI.getInstance("1edf4b9540a5e83c0febf1f4ac407224");
 
-// 生成install model
-Install install = api.createInstall();
+Result result = null;
+try {
+	result = api.createInstall()
 
-// 设置install参数
-install.setDeviceid("xxxxxxxxxx");
-install.setChannelid("appstore");
-
-// 报送install数据并获得返回结果
-Result result = api.post(install);
+	// 设置install参数
+	.setDeviceid("xxxxxxxxxx")
+	.setChannelid("appstore")
+	
+	// 报送install数据
+	.post();
+} catch (ConnectionException e) {
+	e.printStackTrace();
+} catch (TimeoutException e) {
+	e.printStackTrace();
+}
 
 // 输出返回结果
-System.out.println("status: " + result.getStatus());
-System.out.println("httpcode: " + result.getHttpcode());
-System.out.println("requesturl: " + result.getRequestUrl());
-System.out.println("requestjson: " + result.getRequest());
-System.out.println("responsejson: " + result.getResponse());
+System.out.println(result.getMessage());
+```
+
+## 报送数据至redis
+```java
+// 获得报送数据到redis的ReyunAPI实例
+try {
+	ReyunAPI api = ReyunAPI.getInstanceWithBuffer("1edf4b9540a5e83c0febf1f4ac407224", "localhost", 6379);
+} catch (ConnectionException e) {
+	e.printStackTrace();
+}
+
+Result result = null;
+try {
+	result = api.createInstall()
+
+	// 设置install参数
+	.setDeviceid("xxxxxxxxxx")
+	.setChannelid("appstore")
+	
+	// 报送install数据
+	.post();
+} catch (ConnectionException e) {
+	e.printStackTrace();
+} catch (TimeoutException e) {
+	e.printStackTrace();
+}
+
+// 输出返回结果
+System.out.println(result.getMessage());
 ```

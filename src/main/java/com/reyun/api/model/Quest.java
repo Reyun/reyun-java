@@ -1,30 +1,53 @@
 package com.reyun.api.model;
 
+import com.reyun.api.Sender;
 import com.reyun.api.enumeration.QuestStatus;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
 public class Quest extends Model {
 
-	public Quest(String appid) {
-		super(appid);
+	public Quest(String appid, Sender sender) {
+		super(appid, sender);
 		this.where = "quest";
+	}
+	
+	/**
+	 * 设置设备id
+	 * @param deviceid
+	 */
+	public Quest setDeviceid(String deviceid) {
+		context.put("deviceid", deviceid);
+		return this;
+	}
+	
+	/**
+	 * 设置时间
+	 * 		yyyy-MM-dd HH:mm:ss
+	 * @param when
+	 * @return
+	 */
+	public Quest setWhen(String when) {
+		this.when = when;
+		return this;
 	}
 	
 	/**
 	 * 设置账户ID
 	 * @param who
 	 */
-	public void setWho(String who) {
+	public Quest setWho(String who) {
 		this.who = who;
+		return this;
 	}
 	
 	/**
 	 * 设置当前任务/关卡/副本的编号或名称
 	 * @param questid
 	 */
-	public void setQuestid(String questid) {
+	public Quest setQuestid(String questid) {
 		context.put("questid", questid);
+		return this;
 	}
 	
 	/**
@@ -32,8 +55,9 @@ public class Quest extends Model {
 	 * 		开始:a, 完成:c, 失败:f
 	 * @param queststatus
 	 */
-	public void setQueststatus(QuestStatus queststatus) {
+	public Quest setQueststatus(QuestStatus queststatus) {
 		context.put("queststatus", String.valueOf(queststatus));
+		return this;
 	}
 	
 	/**
@@ -43,32 +67,36 @@ public class Quest extends Model {
 	 * 	开发者也可以根据自己游戏的特点自定义类型
 	 * @param questtype
 	 */
-	public void setQuesttype(String questtype) {
+	public Quest setQuesttype(String questtype) {
 		context.put("questtype", questtype);
+		return this;
 	}
 	
 	/**
 	 * 设置服务器id
 	 * @param serverid
 	 */
-	public void setServerid(String serverid) {
+	public Quest setServerid(String serverid) {
 		context.put("serverid", serverid);
+		return this;
 	}
 	
 	/**
 	 * 设置渠道id
 	 * @param channelid
 	 */
-	public void setChannelid(String channelid) {
+	public Quest setChannelid(String channelid) {
 		context.put("channelid", channelid);
+		return this;
 	}
 	
 	/**
 	 * 设置账户等级
 	 * @param level
 	 */
-	public void setLevel(int level) {
+	public Quest setLevel(int level) {
 		context.put("level", String.valueOf(level));
+		return this;
 	}
 
 	@Override

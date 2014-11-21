@@ -13,13 +13,13 @@ import com.reyun.api.enumeration.QuestStatus;
 import com.reyun.api.exception.ConnectionException;
 import com.reyun.api.exception.TimeoutException;
 
-public class ReyunAPITest {
+public class RedisReyunAPITest {
 
 	private static ReyunAPI api;
 	
 	@BeforeClass
-	public static void init() {
-		api = ReyunAPI.getInstance("1edf4b9540a5e83c0febf1f4ac407224");
+	public static void init() throws ConnectionException {
+		api = ReyunAPI.getInstanceWithBuffer("1edf4b9540a5e83c0febf1f4ac407224", "localhost", 6379);
 	}
 	
 	/**
