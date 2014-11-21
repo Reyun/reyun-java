@@ -1,26 +1,15 @@
 package com.reyun.api;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import redis.clients.jedis.Connection;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.reyun.api.exception.AppidNotValidException;
-import com.reyun.api.exception.SystemException;
+import com.reyun.api.exception.ConnectionException;
 import com.reyun.api.model.Economy;
 import com.reyun.api.model.Event;
 import com.reyun.api.model.Heartbeat;
 import com.reyun.api.model.Install;
 import com.reyun.api.model.Loggedin;
-import com.reyun.api.model.Model;
 import com.reyun.api.model.Payment;
 import com.reyun.api.model.Quest;
 import com.reyun.api.model.Register;
@@ -28,23 +17,16 @@ import com.reyun.api.model.Startup;
 import com.reyun.api.util.ValidateUtil;
 
 /**
- * 
  * @author ruijie liruijie@reyun.com
- * @date 2014-11-14
  */
 public class ReyunAPI {
 
 	private String appkey;
 
-	private final String mEventsEndpoint = "http://log.reyun.com/receive/rest/";
-
+	private static Sender sender;
+	
 	private static ReyunAPI instance;
 	
-	/**
-	 * 
-	 * @param appkey
-	 *            应用appkey，需要从reyun后台申请
-	 */
 	private ReyunAPI(String appkey) {
 		if (!ValidateUtil.isValid(appkey)) {
 			throw new AppidNotValidException();
@@ -52,95 +34,124 @@ public class ReyunAPI {
 		this.appkey = appkey;
 	}
 	
-	public static ReyunAPI getInstance(String appkey) {
+	/**
+	 * 获取报送rest接口的ReyunAPI实例，appkey需要从热云后台申请
+	 * @param appkey 游戏appkey
+	 * @param timeout http连接超时时间
+	 * @return ReyunAPI
+	 */
+	public static ReyunAPI getInstance(String appkey, int timeout) {
 		if (null == instance) {
-			instance = new ReyunAPI(appkey);
+			syncInit(appkey);
+		}
+		if (null == sender) {
+			syncHttpSender(timeout);
 		}
 		return instance;
 	}
 	
-	public Install createInstall() {
-		return new Install(appkey);
-	}
-	
-	public Startup createStartup() {
-		return new Startup(appkey);
-	}
-	
-	public Register createRegister() {
-		return new Register(appkey);
-	}
-	
-	public Loggedin createLoggedin() {
-		return new Loggedin(appkey);
-	}
-	
-	public Payment createPayment() {
-		return new Payment(appkey);
-	}
-	
-	public Economy createEconomy() {
-		return new Economy(appkey);
-	}
-	
-	public Quest createQuest() {
-		return new Quest(appkey);
-	}
-	
-	public Event createEvent() {
-		return new Event(appkey);
-	}
-	
-	public Heartbeat createHeartbeat() {
-		return new Heartbeat(appkey);
+	/**
+	 * 获取报送rest接口的ReyunAPI实例，appkey需要从热云后台申请，默认超时为2s
+	 * @param appkey 游戏appkey
+	 * @return ReyunAPI
+	 */
+	public static ReyunAPI getInstance(String appkey) {
+		return getInstance(appkey, 2000);
 	}
 	
 	/**
-	 * 数据报送
-	 * @param model
-	 * @return Result
-	 * 			requestUrl	请求url
-	 * 			request		请求
-	 * 			httpcode	http状态码
-	 * 			status		数据报送是否成功
-	 * 			response	服务端返回
+	 * 获取发送数据到redis的ReyunAPI实例，appkey需要从热云后台申请
+	 * @param appkey 游戏appkey
+	 * @param host redis host
+	 * @param port redis port
+	 * @param timeout redis连接超时时间
+	 * @return ReyunAPI
+	 * @throws JedisConnectionException
 	 */
-	public Result post(Model model) {
-		Result result = new Result();
-		try {
-			CloseableHttpClient client = HttpClients.createDefault();
-			String url = mEventsEndpoint + model.method();
-			
-			HttpPost post = new HttpPost(url);
-			post.setHeader("Content-Type", "application/json;charset=utf8");
-			
-			String request = model.toString();
-			StringEntity se = new StringEntity(request);
-			post.setEntity(se);
-			HttpResponse response = client.execute(post);
-			
-			String responseStr = EntityUtils.toString(response.getEntity());
-			
-			JSONObject responseJSON = JSON.parseObject(responseStr);
-			
-			result.setRequestUrl(url);
-			result.setRequest(request);
-			result.setHttpcode(response.getStatusLine().getStatusCode());
-			result.setResponse(responseStr);
-			
-			if (responseJSON.getIntValue("status") == 0) {
-				result.setStatus(true);
-			} else {
-				result.setStatus(false);
+	public static ReyunAPI getInstanceWithBuffer(String appkey, String host, int port, int timeout) throws ConnectionException {
+		if (null == instance) {
+			syncInit(appkey);
+		}
+		if (null == sender) {
+			try {
+				Connection client = new Connection();
+				client.setHost(host);
+				client.setPort(port);
+				client.setTimeout(timeout);
+				client.connect();
+				client.close();
+			} catch (JedisConnectionException e) {
+				throw new ConnectionException(e.getMessage(), e);
 			}
 			
-			return result;
-		} catch (UnsupportedEncodingException e) {
-			throw new SystemException(e.getMessage(), e);
-		} catch (ClientProtocolException e) {
-			throw new SystemException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new SystemException(e.getMessage(), e);
+			syncRedisSender(host, port, timeout);
 		}
+		return instance;
+	}
+	
+	/**
+	 * 获取发送数据到redis的ReyunAPI实例，appkey需要从热云后台申请，默认超时为2s
+	 * @param appkey 游戏appkey
+	 * @param host redis host
+	 * @param port redis port
+	 * @return ReyunAPI
+	 * @throws ConnectionException
+	 */
+	public static ReyunAPI getInstanceWithBuffer(String appkey, String host, int port) throws ConnectionException {
+		return getInstanceWithBuffer(appkey, host, port, 2000);
+	}
+	
+	private static synchronized void syncInit(String appkey) {
+        if (instance == null) {
+            instance = new ReyunAPI(appkey);
+        }
+    }
+	
+	private static synchronized void syncHttpSender(int timeout) {
+        if (sender == null) {
+        	sender = new HttpSender(timeout);
+        }
+    }
+	
+	private static synchronized void syncRedisSender(String host, int port, int timeout) {
+        if (sender == null) {
+        	sender = new RedisSender(host, port, timeout);
+        }
+    }
+	
+	public Install createInstall() {
+		return new Install(appkey, sender);
+	}
+	
+	public Startup createStartup() {
+		return new Startup(appkey, sender);
+	}
+	
+	public Register createRegister() {
+		return new Register(appkey, sender);
+	}
+	
+	public Loggedin createLoggedin() {
+		return new Loggedin(appkey, sender);
+	}
+	
+	public Payment createPayment() {
+		return new Payment(appkey, sender);
+	}
+	
+	public Economy createEconomy() {
+		return new Economy(appkey, sender);
+	}
+	
+	public Quest createQuest() {
+		return new Quest(appkey, sender);
+	}
+	
+	public Event createEvent() {
+		return new Event(appkey, sender);
+	}
+	
+	public Heartbeat createHeartbeat() {
+		return new Heartbeat(appkey, sender);
 	}
 }
