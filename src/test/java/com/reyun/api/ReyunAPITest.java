@@ -1,6 +1,6 @@
 package com.reyun.api;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,15 +10,8 @@ import org.junit.Test;
 
 import com.reyun.api.enumeration.Gender;
 import com.reyun.api.enumeration.QuestStatus;
-import com.reyun.api.model.Economy;
-import com.reyun.api.model.Event;
-import com.reyun.api.model.Heartbeat;
-import com.reyun.api.model.Install;
-import com.reyun.api.model.Loggedin;
-import com.reyun.api.model.Payment;
-import com.reyun.api.model.Quest;
-import com.reyun.api.model.Register;
-import com.reyun.api.model.Startup;
+import com.reyun.api.exception.ConnectionException;
+import com.reyun.api.exception.TimeoutException;
 
 public class ReyunAPITest {
 
@@ -34,22 +27,26 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void installTest() {
-		Install install = api.createInstall();
+		Result result = null;
+		try {
+			result = api.createInstall()
 		
-		// required parameters
-		install.setDeviceid("xxxxxxxxxx");
-		
-		// unrequired parameters
-		install.setChannelid("appstore");
-		
-		Result result = api.post(install);
+			// required parameters
+			.setDeviceid("xxxxxxxxxx")
+			
+			// unrequired parameters
+			.setChannelid("appstore")
+			
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -57,28 +54,32 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void startupTest() {
-		Startup startup = api.createStartup();
-		
-		// required parameters
-		startup.setDeviceid("xxxxxxxxxx");
-		
-		// unrequired parameters
-		startup.setChannelid("appstore");
-		startup.setTZ("+8");
-		startup.setDevicetype("ios");
-		startup.setOP("cmcc");
-		startup.setNetwork("3g");
-		startup.setOS("ios");
-		startup.setResolution("800*600");
-		
-		Result result = api.post(startup);
+		Result result = null;
+		try {
+			result = api.createStartup()
+			
+			// required parameters
+			.setDeviceid("xxxxxxxxxx")
+			
+			// unrequired parameters
+			.setChannelid("appstore")
+			.setTZ("+8")
+			.setDevicetype("ios")
+			.setOP("cmcc")
+			.setNetwork("3g")
+			.setOS("ios")
+			.setResolution("800*600")
+			
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -86,27 +87,31 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void registerTest() {
-		Register register = api.createRegister();
+		Result result = null;
+		try {
+			result = api.createRegister()
+			
+			// required parameters
+			.setWho("Sylar")
+			.setDeviceid("xxxxxxxxxx")
+			
+			// unrequired parameters
+			.setAccounttype("qq")
+			.setGender(Gender.f)
+			.setAge(20)
+			.setServerid("测试一服")
+			.setChannelid("appstore")
 		
-		// required parameters
-		register.setWho("Sylar");
-		register.setDeviceid("xxxxxxxxxx");
-		
-		// unrequired parameters
-		register.setAccounttype("qq");
-		register.setGender(Gender.f);
-		register.setAge(20);
-		register.setServerid("测试一服");
-		register.setChannelid("appstore");
-		
-		Result result = api.post(register);
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -114,25 +119,29 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void loggedinTest() {
-		Loggedin loggedin = api.createLoggedin();
+		Result result = null;
+		try {
+			result = api.createLoggedin()
+			
+			// required parameters
+			.setWho("Sylar")
+			.setDeviceid("xxxxxxxxxx")
+			
+			// unrequired parameters
+			.setServerid("测试一服")
+			.setChannelid("appstore")
+			.setLevel(11)
 		
-		// required parameters
-		loggedin.setWho("Sylar");
-		loggedin.setDeviceid("xxxxxxxxxx");
-		
-		// unrequired parameters
-		loggedin.setServerid("测试一服");
-		loggedin.setChannelid("appstore");
-		loggedin.setLevel(11);
-		
-		Result result = api.post(loggedin);
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -140,32 +149,36 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void paymentTest() {
-		Payment payment = api.createPayment();
-		
-		// required parameters
-		payment.setWho("Sylar");
-		payment.setDeviceid("xxxxxxxxxx");
-		payment.setTransactionid("0000001");
-		payment.setPaymenttype("IAP");
-		payment.setCurrencytype("CNY");
-		payment.setCurrencyamount("100");
-		payment.setVirtualcoinamount("10000");
-		payment.setIapname("keys");
-		payment.setIapamount("1");
-		
-		// unrequired parameters
-		payment.setServerid("测试一服");
-		payment.setChannelid("appstore");
-		payment.setLevel(11);
-		
-		Result result = api.post(payment);
+		Result result = null;
+		try {
+			result = api.createPayment()
+			
+			// required parameters
+			.setWho("Sylar")
+			.setDeviceid("xxxxxxxxxx")
+			.setTransactionid("0000001")
+			.setPaymenttype("IAP")
+			.setCurrencytype("CNY")
+			.setCurrencyamount("100")
+			.setVirtualcoinamount("10000")
+			.setIapname("keys")
+			.setIapamount("1")
+			
+			// unrequired parameters
+			.setServerid("测试一服")
+			.setChannelid("appstore")
+			.setLevel(11)
+			
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -173,28 +186,32 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void economyTest() {
-		Economy economy = api.createEconomy();
+		Result result = null;
+		try {
+			result = api.createEconomy()
+			
+			// required parameters
+			.setWho("Sylar")
+			.setDeviceid("xxxxxxxxxx")
+			.setItemname("xxx")
+			.setItemamount("10")
+			.setItemtotalprice("1000")
+			
+			// unrequired parameters
+			.setServerid("测试一服")
+			.setChannelid("appstore")
+			.setLevel(11)
 		
-		// required parameters
-		economy.setWho("Sylar");
-		economy.setDeviceid("xxxxxxxxxx");
-		economy.setItemname("xxx");
-		economy.setItemamount("10");
-		economy.setItemtotalprice("1000");
-		
-		// unrequired parameters
-		economy.setServerid("测试一服");
-		economy.setChannelid("appstore");
-		economy.setLevel(11);
-		
-		Result result = api.post(economy);
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -202,28 +219,32 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void questTest() {
-		Quest quest = api.createQuest();
-		
-		// required parameters
-		quest.setWho("Sylar");
-		quest.setDeviceid("xxxxxxxxxx");
-		quest.setQuestid("第一关");
-		quest.setQueststatus(QuestStatus.a);
-		quest.setQuesttype("new");
-		
-		// unrequired parameters
-		quest.setServerid("测试一服");
-		quest.setChannelid("appstore");
-		quest.setLevel(11);
-		
-		Result result = api.post(quest);
+		Result result = null;
+		try {
+			result = api.createQuest()
+			
+			// required parameters
+			.setWho("Sylar")
+			.setDeviceid("xxxxxxxxxx")
+			.setQuestid("第一关")
+			.setQueststatus(QuestStatus.a)
+			.setQuesttype("new")
+			
+			// unrequired parameters
+			.setServerid("测试一服")
+			.setChannelid("appstore")
+			.setLevel(11)
+			
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -231,31 +252,34 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void eventTest() {
-		Event  event = api.createEvent();
-
-		// required parameters
-		event.setWho("Sylar");
-		event.setWhat("kill_boss");
-		event.setDeviceid("xxxxxxxxxx");
+		Result result = null;
+		try {
+			Map<String, String> extra = new HashMap<String, String>();
+			extra.put("moneydrop", "100");
+			extra.put("boosname", "diablo");
+			
+			result = api.createEvent()
+	
+			// required parameters
+			.setWho("Sylar")
+			.setWhat("kill_boss")
+			.setDeviceid("xxxxxxxxxx")
+			
+			// unrequired parameters
+			.setServerid("测试一服")
+			.setChannelid("appstore")
+			.setUserDefine(extra)
 		
-		// unrequired parameters
-		event.setServerid("测试一服");
-		event.setChannelid("appstore");
-		
-		Map<String, String> extra = new HashMap<String, String>();
-		extra.put("moneydrop", "100");
-		extra.put("boosname", "diablo");
-		
-		event.setUserDefine(extra);
-		
-		Result result = api.post(event);
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 	
 	/**
@@ -263,24 +287,28 @@ public class ReyunAPITest {
 	 */
 	@Test
 	public void heartbeatTest() {
-		Heartbeat heartbeat = api.createHeartbeat();
-		
-		// required parameters
-		heartbeat.setWho("Sylar");
-		heartbeat.setDeviceid("xxxxxxxxxx");
-		
-		// unrequired parameters
-		heartbeat.setServerid("测试一服");
-		heartbeat.setChannelid("appstore");
-		heartbeat.setLevel(11);
-		
-		Result result = api.post(heartbeat);
+		Result result = null;
+		try {
+			result = api.createHeartbeat()
+			
+			// required parameters
+			.setWho("Sylar")
+			.setDeviceid("xxxxxxxxxx")
+			
+			// unrequired parameters
+			.setServerid("测试一服")
+			.setChannelid("appstore")
+			.setLevel(11)
+			
+			.post();
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			e.printStackTrace();
+		}
 		
 		assertTrue(result.getStatus());
-		assertEquals(200, result.getHttpcode());
 		
-		System.out.println("requesturl: " + result.getRequestUrl());
-		System.out.println("requestjson: " + result.getRequest());
-		System.out.println("responsejson: " + result.getResponse());
+		System.out.println(result.getMessage());
 	}
 }
