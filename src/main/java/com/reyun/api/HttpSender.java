@@ -2,8 +2,8 @@ package com.reyun.api;
 
 import java.net.SocketTimeoutException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -42,7 +42,8 @@ public class HttpSender extends Sender {
 			String request = model.toString();
 			StringEntity se = new StringEntity(request);
 			post.setEntity(se);
-			HttpResponse response = client.execute(post);
+			// update--Author:ruijie Date:2015-07-07 for: 修改为CloseableHttpResponse --------
+			CloseableHttpResponse response = client.execute(post);
 			
 			String responseStr = EntityUtils.toString(response.getEntity());
 			
@@ -61,6 +62,10 @@ public class HttpSender extends Sender {
 			} else {
 				result.setStatus(false);
 			}
+			
+			// update--Author:ruijie Date:2015-07-07 for: 关闭response与httpclient --------
+			response.close();
+			client.close();
 		} catch (SocketTimeoutException e) {
 			result.setStatus(false);
 			result.setMessage(e.getMessage());
