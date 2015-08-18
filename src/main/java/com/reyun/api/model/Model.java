@@ -75,6 +75,11 @@ public abstract class Model<T> {
         return (T)this;
     }
     
+    /**
+     * 设置用户自定义参数
+     * 
+     * @param map
+     */
     @SuppressWarnings("unchecked")
     public T setContext(Map<String, String> context) {
         this.context.putAll(context);

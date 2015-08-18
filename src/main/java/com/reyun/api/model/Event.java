@@ -1,7 +1,5 @@
 package com.reyun.api.model;
 
-import java.util.Map;
-
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
@@ -45,16 +43,6 @@ public class Event extends Model<Event> {
      */
     public Event setServerid(String serverid) {
         context.put("serverid", serverid);
-        return this;
-    }
-
-    /**
-     * 设置用户自定义参数
-     * 
-     * @param map
-     */
-    public Event setUserDefine(Map<String, String> map) {
-        context.putAll(map);
         return this;
     }
 
