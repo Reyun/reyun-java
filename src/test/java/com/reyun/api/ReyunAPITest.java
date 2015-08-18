@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.reyun.api.enumeration.Gender;
 import com.reyun.api.enumeration.QuestStatus;
 import com.reyun.api.exception.AppidNotValidException;
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.exception.ReyunTimeoutException;
 
@@ -54,6 +55,8 @@ public class ReyunAPITest {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
             e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
+            e.printStackTrace();
         }
 
         assertTrue(result.getStatus());
@@ -91,6 +94,8 @@ public class ReyunAPITest {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
             e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
+            e.printStackTrace();
         }
 
         assertTrue(result.getStatus());
@@ -127,6 +132,8 @@ public class ReyunAPITest {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
             e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
+            e.printStackTrace();
         }
 
         assertTrue(result.getStatus());
@@ -160,6 +167,8 @@ public class ReyunAPITest {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
+            e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
             e.printStackTrace();
         }
 
@@ -202,6 +211,8 @@ public class ReyunAPITest {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
             e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
+            e.printStackTrace();
         }
 
         assertTrue(result.getStatus());
@@ -238,6 +249,8 @@ public class ReyunAPITest {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
+            e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
             e.printStackTrace();
         }
 
@@ -276,6 +289,8 @@ public class ReyunAPITest {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
             e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
+            e.printStackTrace();
         }
 
         assertTrue(result.getStatus());
@@ -290,9 +305,9 @@ public class ReyunAPITest {
     public void eventTest() {
         Result result = null;
         try {
-            Map<String, String> extra = new HashMap<String, String>();
-            extra.put("moneydrop", "100");
-            extra.put("boosname", "diablo");
+            Map<String, String> context = new HashMap<String, String>();
+            context.put("moneydrop", "100");
+            context.put("boosname", "diablo");
 
             result = api.createEvent()
 
@@ -304,7 +319,7 @@ public class ReyunAPITest {
             // unrequired parameters
             .setServerid("测试一服")
             .setChannelid("appstore")
-            .setUserDefine(extra)
+            .setContext(context)
 
             .post();
         } catch (ConnectException e) {
@@ -314,6 +329,8 @@ public class ReyunAPITest {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
+            e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
             e.printStackTrace();
         }
 
@@ -348,6 +365,8 @@ public class ReyunAPITest {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParamRequiredException e) {
+            e.printStackTrace();
+        } catch (ContextSizeTooLongException e) {
             e.printStackTrace();
         }
 
