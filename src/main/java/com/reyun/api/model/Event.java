@@ -8,7 +8,6 @@ import com.reyun.api.util.ValidateUtil;
  * Event
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Event extends Model<Event> {
 
@@ -20,7 +19,8 @@ public class Event extends Model<Event> {
     /**
      * 设置账户ID
      * 
-     * @param who
+     * @param who 账户ID
+     * @return Event
      */
     public Event setWho(String who) {
         this.who = who;
@@ -30,7 +30,8 @@ public class Event extends Model<Event> {
     /**
      * 设置自定义事件名
      * 
-     * @param what
+     * @param what 自定义事件名
+     * @return Event
      */
     public Event setWhat(String what) {
         this.what = what;
@@ -40,7 +41,8 @@ public class Event extends Model<Event> {
     /**
      * 设置服务器id
      * 
-     * @param serverid
+     * @param serverid 服务器id
+     * @return Event
      */
     public Event setServerid(String serverid) {
         context.put("serverid", serverid);

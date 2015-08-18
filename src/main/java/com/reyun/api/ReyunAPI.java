@@ -16,7 +16,6 @@ import com.reyun.api.util.ValidateUtil;
  * reyun java sdk
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月15日
  */
 public class ReyunAPI {
 
@@ -37,9 +36,9 @@ public class ReyunAPI {
     /**
      * 获取报送rest接口的ReyunAPI实例，appkey需要从热云后台申请，默认超时为2s
      * 
-     * @param appkey
-     *            游戏appkey
+     * @param appkey 游戏appkey
      * @return ReyunAPI
+     * @throws AppidNotValidException if the appkey is not valid
      */
     public static final ReyunAPI getInstance(String appkey) throws AppidNotValidException {
         return getInstance(appkey, 2000);
@@ -48,11 +47,10 @@ public class ReyunAPI {
     /**
      * 获取报送rest接口的ReyunAPI实例，appkey需要从热云后台申请
      * 
-     * @param appkey
-     *            游戏appkey
-     * @param timeout
-     *            http连接超时时间
+     * @param appkey 游戏appkey
+     * @param timeout http连接超时时间
      * @return ReyunAPI
+     * @throws AppidNotValidException if the appkey is not valid
      */
     public static final ReyunAPI getInstance(String appkey, int timeout) throws AppidNotValidException {
         if (null == instance) {

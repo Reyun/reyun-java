@@ -8,7 +8,6 @@ import com.reyun.api.util.ValidateUtil;
  * Payment
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Payment extends Model<Payment> {
 
@@ -20,7 +19,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置账户ID
      * 
-     * @param who
+     * @param who 账户ID
+     * @return Payment
      */
     public Payment setWho(String who) {
         this.who = who;
@@ -30,7 +30,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置交易的流水号
      * 
-     * @param transactionid
+     * @param transactionid 交易的流水号
+     * @return Payment
      */
     public Payment setTransactionid(String transactionid) {
         context.put("transactionid", transactionid);
@@ -40,7 +41,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置支付类型 如支付宝,银联,苹果,谷歌官方等 如果是系统赠送则为free
      * 
-     * @param paymenttype
+     * @param paymenttype 支付类型
+     * @return Payment
      */
     public Payment setPaymenttype(String paymenttype) {
         context.put("paymenttype", paymenttype);
@@ -50,7 +52,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置货币类型 按照国际标准组织ISO4217中规范的3位字母 如CNY人民币,USD美金
      * 
-     * @param currencytype
+     * @param currencytype 货币类型
+     * @return Payment
      */
     public Payment setCurrencytype(String currencytype) {
         context.put("currencytype", currencytype);
@@ -60,7 +63,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置支付金额
      * 
-     * @param currencyamount
+     * @param currencyamount 支付金额
+     * @return Payment
      */
     public Payment setCurrencyamount(String currencyamount) {
         context.put("currencyamount", currencyamount);
@@ -70,7 +74,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置通过充值获得的游戏内货币数量
      * 
-     * @param virtualcoinamount
+     * @param virtualcoinamount 通过充值获得的游戏内货币数量
+     * @return Payment
      */
     public Payment setVirtualcoinamount(String virtualcoinamount) {
         context.put("virtualcoinamount", virtualcoinamount);
@@ -80,7 +85,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置游戏内购买道具的名称
      * 
-     * @param iapname
+     * @param iapname 游戏内购买道具的名称
+     * @return Payment
      */
     public Payment setIapname(String iapname) {
         context.put("iapname", iapname);
@@ -90,7 +96,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置游戏内购买道具的数量
      * 
-     * @param iapamount
+     * @param iapamount 游戏内购买道具的数量
+     * @return Payment
      */
     public Payment setIapamount(String iapamount) {
         context.put("iapamount", iapamount);
@@ -100,7 +107,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置服务器id
      * 
-     * @param serverid
+     * @param serverid 服务器id
+     * @return Payment
      */
     public Payment setServerid(String serverid) {
         context.put("serverid", serverid);
@@ -110,7 +118,8 @@ public class Payment extends Model<Payment> {
     /**
      * 设置账户等级
      * 
-     * @param level
+     * @param level 账户等级
+     * @return Payment
      */
     public Payment setLevel(int level) {
         context.put("level", String.valueOf(level));
