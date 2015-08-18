@@ -28,7 +28,7 @@ public class ReyunAPI {
 
     private ReyunAPI(String appkey, int timeout) throws AppidNotValidException {
         if ( ! ValidateUtil.isValid(appkey)) {
-            throw new AppidNotValidException();
+            throw new AppidNotValidException(appkey);
         }
         this.appkey = appkey;
         this.timeout = timeout;
