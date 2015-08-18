@@ -31,7 +31,6 @@ import com.reyun.api.model.Model;
 /**
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月17日
  */
 public class HttpUtil {
     private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);

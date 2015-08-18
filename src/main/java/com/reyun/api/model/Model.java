@@ -19,7 +19,6 @@ import com.reyun.api.util.ValidateUtil;
  * Model
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Model<T> {
     protected int timeout;
@@ -44,8 +43,8 @@ public class Model<T> {
     /**
      * 设置设备id
      * 
-     * @param deviceid
-     * @return
+     * @param deviceid 设备id
+     * @return Model
      */
     @SuppressWarnings("unchecked")
     public T setDeviceid(String deviceid) {
@@ -56,8 +55,8 @@ public class Model<T> {
     /**
      * 设置时间
      * 
-     * @param when
-     * @return
+     * @param when 时间
+     * @return Model
      */
     @SuppressWarnings("unchecked")
     public T setWhen(Date when) {
@@ -68,7 +67,8 @@ public class Model<T> {
     /**
      * 设置渠道id
      * 
-     * @param channelid
+     * @param channelid 渠道id
+     * @return Model
      */
     @SuppressWarnings("unchecked")
     public T setChannelid(String channelid) {
@@ -79,7 +79,8 @@ public class Model<T> {
     /**
      * 设置用户自定义参数
      * 
-     * @param map
+     * @param context 用户自定义参数
+     * @return Model
      */
     @SuppressWarnings("unchecked")
     public T setContext(Map<String, String> context) {
@@ -138,14 +139,14 @@ public class Model<T> {
     /**
      * 数据报送
      * 
-     * @param model
      * @return Result
      *          status 数据报送是否成功
      *          message 返回信息
-     * @throws ConnectException
-     * @throws ReyunTimeoutException
-     * @throws IOException
-     * @throws ParamRequiredException
+     * @throws ConnectException if the connection was aborted
+     * @throws ReyunTimeoutException if the connection was timeout
+     * @throws IOException if the connection was aborted
+     * @throws ParamRequiredException if the param is null or not valid
+     * @throws ContextSizeTooLongException if the size of context more than 32
      */
     public Result post() throws ConnectException, ReyunTimeoutException, IOException, ParamRequiredException, ContextSizeTooLongException {
         validate();

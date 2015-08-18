@@ -7,7 +7,6 @@ import com.reyun.api.exception.ParamRequiredException;
  * Heartbeat
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Heartbeat extends Model<Heartbeat> {
 
@@ -19,7 +18,8 @@ public class Heartbeat extends Model<Heartbeat> {
     /**
      * 设置账户ID
      * 
-     * @param who
+     * @param who 账户ID
+     * @return Heartbeat
      */
     public Heartbeat setWho(String who) {
         this.who = who;
@@ -29,7 +29,8 @@ public class Heartbeat extends Model<Heartbeat> {
     /**
      * 设置服务器id
      * 
-     * @param serverid
+     * @param serverid 服务器id
+     * @return Heartbeat
      */
     public Heartbeat setServerid(String serverid) {
         context.put("serverid", serverid);
@@ -39,7 +40,8 @@ public class Heartbeat extends Model<Heartbeat> {
     /**
      * 设置账户等级
      * 
-     * @param level
+     * @param level 账户等级
+     * @return Heartbeat
      */
     public Heartbeat setLevel(int level) {
         context.put("level", String.valueOf(level));
