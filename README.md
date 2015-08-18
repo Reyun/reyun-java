@@ -26,7 +26,7 @@
 <dependency>
     <groupId>com.reyun</groupId>
     <artifactId>reyun-java</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
 </dependency>
 ```
 
@@ -34,35 +34,11 @@
 ## 报送数据至rest接口
 ```java
 // 获得报送rest接口的ReyunAPI实例
-ReyunAPI api = ReyunAPI.getInstance("1edf4b9540a5e83c0febf1f4ac407224");
-
-Result result = null;
+ReyunAPI api = null;
 try {
-	result = api.createInstall()
-
-	// 设置install参数
-	.setDeviceid("xxxxxxxxxx")
-	.setChannelid("appstore")
-	
-	// 报送install数据
-	.post();
-} catch (ConnectionException e) {
-	e.printStackTrace();
-} catch (TimeoutException e) {
-	e.printStackTrace();
-}
-
-// 输出返回结果
-System.out.println(result.getMessage());
-```
-
-## 报送数据至redis
-```java
-// 获得报送数据到redis的ReyunAPI实例
-try {
-	ReyunAPI api = ReyunAPI.getInstanceWithBuffer("1edf4b9540a5e83c0febf1f4ac407224", "localhost", 6379);
-} catch (ConnectionException e) {
-	e.printStackTrace();
+    api = ReyunAPI.getInstance("1edf4b9540a5e83c0febf1f4ac407224");
+} catch (AppidNotValidException e) {
+    e.printStackTrace();
 }
 
 Result result = null;
@@ -75,10 +51,16 @@ try {
 	
 	// 报送install数据
 	.post();
-} catch (ConnectionException e) {
-	e.printStackTrace();
-} catch (TimeoutException e) {
-	e.printStackTrace();
+} catch (ConnectException e) {
+    e.printStackTrace();
+} catch (ReyunTimeoutException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+} catch (ParamRequiredException e) {
+    e.printStackTrace();
+} catch (ContextSizeTooLongException e) {
+    e.printStackTrace();
 }
 
 // 输出返回结果
