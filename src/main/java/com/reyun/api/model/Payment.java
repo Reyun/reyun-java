@@ -1,5 +1,6 @@
 package com.reyun.api.model;
 
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
@@ -117,32 +118,28 @@ public class Payment extends Model<Payment> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(who)) {
-            throw new ParamRequiredException("who must be set in payment");
-        }
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in payment");
-        }
-        if (!ValidateUtil.isValid(context.get("transactionid"))) {
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
+        super.checkWho();
+        if ( ! ValidateUtil.isValid(context.get("transactionid"))) {
             throw new ParamRequiredException("transactionid must be set in payment");
         }
-        if (!ValidateUtil.isValid(context.get("paymenttype"))) {
+        if ( ! ValidateUtil.isValid(context.get("paymenttype"))) {
             throw new ParamRequiredException("paymenttype must be set in payment");
         }
-        if (!ValidateUtil.isValid(context.get("currencytype"))) {
+        if ( ! ValidateUtil.isValid(context.get("currencytype"))) {
             throw new ParamRequiredException("currencytype must be set in payment");
         }
-        if (!ValidateUtil.isValid(context.get("currencyamount"))) {
+        if ( ! ValidateUtil.isValid(context.get("currencyamount"))) {
             throw new ParamRequiredException("currencyamount must be set in payment");
         }
-        if (!ValidateUtil.isValid(context.get("virtualcoinamount"))) {
+        if ( ! ValidateUtil.isValid(context.get("virtualcoinamount"))) {
             throw new ParamRequiredException("virtualcoinamount must be set in payment");
         }
-        if (!ValidateUtil.isValid(context.get("iapname"))) {
+        if ( ! ValidateUtil.isValid(context.get("iapname"))) {
             throw new ParamRequiredException("iapname must be set in payment");
         }
-        if (!ValidateUtil.isValid(context.get("iapamount"))) {
+        if ( ! ValidateUtil.isValid(context.get("iapamount"))) {
             throw new ParamRequiredException("iapamount must be set in payment");
         }
     }

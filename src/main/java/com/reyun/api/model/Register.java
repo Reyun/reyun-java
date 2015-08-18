@@ -1,8 +1,8 @@
 package com.reyun.api.model;
 
 import com.reyun.api.enumeration.Gender;
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
-import com.reyun.api.util.ValidateUtil;
 
 /**
  * Register
@@ -68,12 +68,8 @@ public class Register extends Model<Register> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(who)) {
-            throw new ParamRequiredException("who must be set in register");
-        }
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in register");
-        }
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
+        super.checkWho();
     }
 }

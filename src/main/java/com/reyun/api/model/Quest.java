@@ -1,6 +1,7 @@
 package com.reyun.api.model;
 
 import com.reyun.api.enumeration.QuestStatus;
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
@@ -78,20 +79,16 @@ public class Quest extends Model<Quest> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(who)) {
-            throw new ParamRequiredException("who must be set in quest");
-        }
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in quest");
-        }
-        if (!ValidateUtil.isValid(context.get("questid"))) {
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
+        super.checkWho();
+        if ( ! ValidateUtil.isValid(context.get("questid"))) {
             throw new ParamRequiredException("questid must be set in quest");
         }
-        if (!ValidateUtil.isValid(context.get("queststatus"))) {
+        if ( ! ValidateUtil.isValid(context.get("queststatus"))) {
             throw new ParamRequiredException("queststatus must be set in quest");
         }
-        if (!ValidateUtil.isValid(context.get("questtype"))) {
+        if ( ! ValidateUtil.isValid(context.get("questtype"))) {
             throw new ParamRequiredException("questtype must be set in quest");
         }
     }

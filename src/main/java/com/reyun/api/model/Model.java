@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.reyun.api.Result;
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.exception.ReyunTimeoutException;
 import com.reyun.api.util.HttpUtil;
@@ -20,7 +21,7 @@ import com.reyun.api.util.ValidateUtil;
  * @author liruijie@reyun.com
  * @date 2015年8月18日
  */
-public abstract class Model<T> {
+public class Model<T> {
     protected int timeout;
 
     protected String appid;
@@ -86,8 +87,6 @@ public abstract class Model<T> {
         return (T) this;
     }
 
-    protected abstract void validate() throws ParamRequiredException;
-
     @Override
     public String toString() {
         return JSON.toJSONString(this);
@@ -121,6 +120,21 @@ public abstract class Model<T> {
         }
     }
 
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        if ( ! ValidateUtil.isValid(context.get("deviceid"))) {
+            throw new ParamRequiredException("deviceid must be set in " + where);
+        }
+        if (context.size() > 32) {
+            throw new ContextSizeTooLongException(context.size());
+        }
+    }
+    
+    protected void checkWho() throws ParamRequiredException {
+        if ( ! ValidateUtil.isValid(who)) {
+            throw new ParamRequiredException("who must be set in " + where);
+        }
+    }
+    
     /**
      * 数据报送
      * 
@@ -133,7 +147,7 @@ public abstract class Model<T> {
      * @throws IOException
      * @throws ParamRequiredException
      */
-    public Result post() throws ConnectException, ReyunTimeoutException, IOException, ParamRequiredException {
+    public Result post() throws ConnectException, ReyunTimeoutException, IOException, ParamRequiredException, ContextSizeTooLongException {
         validate();
         return HttpUtil.post(this, timeout);
     }

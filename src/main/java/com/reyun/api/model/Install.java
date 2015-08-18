@@ -1,7 +1,7 @@
 package com.reyun.api.model;
 
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
-import com.reyun.api.util.ValidateUtil;
 
 /**
  * Install
@@ -17,9 +17,7 @@ public class Install extends Model<Install> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in install");
-        }
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
     }
 }

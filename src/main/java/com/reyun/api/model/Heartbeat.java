@@ -1,7 +1,7 @@
 package com.reyun.api.model;
 
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
-import com.reyun.api.util.ValidateUtil;
 
 /**
  * Heartbeat
@@ -47,12 +47,8 @@ public class Heartbeat extends Model<Heartbeat> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(who)) {
-            throw new ParamRequiredException("who must be set in heartbeat");
-        }
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in heartbeat");
-        }
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
+        super.checkWho();
     }
 }

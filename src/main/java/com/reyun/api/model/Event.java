@@ -1,5 +1,6 @@
 package com.reyun.api.model;
 
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
@@ -47,15 +48,11 @@ public class Event extends Model<Event> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(who)) {
-            throw new ParamRequiredException("who must be set in event");
-        }
-        if (!ValidateUtil.isValid(what)) {
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
+        super.checkWho();
+        if ( ! ValidateUtil.isValid(what)) {
             throw new ParamRequiredException("what must be set in event");
-        }
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in event");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.reyun.api.model;
 
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
 import com.reyun.api.util.ValidateUtil;
 
@@ -77,20 +78,16 @@ public class Economy extends Model<Economy> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(who)) {
-            throw new ParamRequiredException("who must be set in economy");
-        }
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in economy");
-        }
-        if (!ValidateUtil.isValid(context.get("itemname"))) {
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
+        super.checkWho();
+        if ( ! ValidateUtil.isValid(context.get("itemname"))) {
             throw new ParamRequiredException("itemname must be set in economy");
         }
-        if (!ValidateUtil.isValid(context.get("itemamount"))) {
+        if ( ! ValidateUtil.isValid(context.get("itemamount"))) {
             throw new ParamRequiredException("itemamount must be set in economy");
         }
-        if (!ValidateUtil.isValid(context.get("itemtotalprice"))) {
+        if ( ! ValidateUtil.isValid(context.get("itemtotalprice"))) {
             throw new ParamRequiredException("itemtotalprice must be set in economy");
         }
     }

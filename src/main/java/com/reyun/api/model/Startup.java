@@ -1,7 +1,7 @@
 package com.reyun.api.model;
 
+import com.reyun.api.exception.ContextSizeTooLongException;
 import com.reyun.api.exception.ParamRequiredException;
-import com.reyun.api.util.ValidateUtil;
 
 /**
  * Startup
@@ -77,9 +77,7 @@ public class Startup extends Model<Startup> {
     }
 
     @Override
-    protected void validate() throws ParamRequiredException {
-        if (!ValidateUtil.isValid(context.get("deviceid"))) {
-            throw new ParamRequiredException("deviceid must be set in startup");
-        }
+    protected void validate() throws ParamRequiredException, ContextSizeTooLongException {
+        super.validate();
     }
 }
