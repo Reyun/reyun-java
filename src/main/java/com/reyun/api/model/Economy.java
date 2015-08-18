@@ -8,7 +8,6 @@ import com.reyun.api.util.ValidateUtil;
  * Economy
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Economy extends Model<Economy> {
 
@@ -20,7 +19,8 @@ public class Economy extends Model<Economy> {
     /**
      * 设置账户ID
      * 
-     * @param who
+     * @param who 账户ID
+     * @return Economy
      */
     public Economy setWho(String who) {
         this.who = who;
@@ -30,7 +30,8 @@ public class Economy extends Model<Economy> {
     /**
      * 设置游戏内虚拟物品名称/ID
      * 
-     * @param itemname
+     * @param itemname 游戏内虚拟物品名称/ID
+     * @return Economy
      */
     public Economy setItemname(String itemname) {
         context.put("itemname", itemname);
@@ -40,7 +41,8 @@ public class Economy extends Model<Economy> {
     /**
      * 设置交易的数量
      * 
-     * @param itemamount
+     * @param itemamount 交易的数量
+     * @return Economy
      */
     public Economy setItemamount(String itemamount) {
         context.put("itemamount", itemamount);
@@ -50,7 +52,8 @@ public class Economy extends Model<Economy> {
     /**
      * 设置交易的总价
      * 
-     * @param itemtotalprice
+     * @param itemtotalprice 交易的总价
+     * @return Economy
      */
     public Economy setItemtotalprice(String itemtotalprice) {
         context.put("itemtotalprice", itemtotalprice);
@@ -60,7 +63,8 @@ public class Economy extends Model<Economy> {
     /**
      * 设置服务器id
      * 
-     * @param serverid
+     * @param serverid 服务器id
+     * @return Economy
      */
     public Economy setServerid(String serverid) {
         context.put("serverid", serverid);
@@ -70,7 +74,8 @@ public class Economy extends Model<Economy> {
     /**
      * 设置账户等级
      * 
-     * @param level
+     * @param level 账户等级
+     * @return Economy
      */
     public Economy setLevel(int level) {
         context.put("level", String.valueOf(level));

@@ -7,7 +7,6 @@ import com.reyun.api.exception.ParamRequiredException;
  * Install
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Install extends Model<Install> {
 

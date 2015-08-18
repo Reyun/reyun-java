@@ -9,7 +9,6 @@ import com.reyun.api.util.ValidateUtil;
  * Quest
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Quest extends Model<Quest> {
 
@@ -21,7 +20,8 @@ public class Quest extends Model<Quest> {
     /**
      * 设置账户ID
      * 
-     * @param who
+     * @param who 账户ID
+     * @return Quest
      */
     public Quest setWho(String who) {
         this.who = who;
@@ -31,7 +31,8 @@ public class Quest extends Model<Quest> {
     /**
      * 设置当前任务/关卡/副本的编号或名称
      * 
-     * @param questid
+     * @param questid 任务/关卡/副本的编号
+     * @return Quest
      */
     public Quest setQuestid(String questid) {
         context.put("questid", questid);
@@ -41,7 +42,8 @@ public class Quest extends Model<Quest> {
     /**
      * 设置当前任务/关卡/副本的状态 开始:a, 完成:c, 失败:f
      * 
-     * @param queststatus
+     * @param queststatus 任务/关卡/副本的状态
+     * @return Quest
      */
     public Quest setQueststatus(QuestStatus queststatus) {
         context.put("queststatus", String.valueOf(queststatus));
@@ -51,7 +53,8 @@ public class Quest extends Model<Quest> {
     /**
      * 设置当前任务/关卡/副本的类型 例如： 新手任务:new, 主线任务:main, 支线任务:sub 开发者也可以根据自己游戏的特点自定义类型
      * 
-     * @param questtype
+     * @param questtype 任务/关卡/副本的类型
+     * @return Quest
      */
     public Quest setQuesttype(String questtype) {
         context.put("questtype", questtype);
@@ -61,7 +64,8 @@ public class Quest extends Model<Quest> {
     /**
      * 设置服务器id
      * 
-     * @param serverid
+     * @param serverid 服务器id
+     * @return Quest
      */
     public Quest setServerid(String serverid) {
         context.put("serverid", serverid);
@@ -71,7 +75,8 @@ public class Quest extends Model<Quest> {
     /**
      * 设置账户等级
      * 
-     * @param level
+     * @param level 账户等级
+     * @return Quest
      */
     public Quest setLevel(int level) {
         context.put("level", String.valueOf(level));

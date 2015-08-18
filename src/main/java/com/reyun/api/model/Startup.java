@@ -7,7 +7,6 @@ import com.reyun.api.exception.ParamRequiredException;
  * Startup
  * 
  * @author liruijie@reyun.com
- * @date 2015年8月18日
  */
 public class Startup extends Model<Startup> {
 
@@ -19,7 +18,8 @@ public class Startup extends Model<Startup> {
     /**
      * 设置时区
      * 
-     * @param tz
+     * @param tz 时区
+     * @return Startup
      */
     public Startup setTZ(String tz) {
         context.put("tz", tz);
@@ -29,7 +29,8 @@ public class Startup extends Model<Startup> {
     /**
      * 设置设备类型
      * 
-     * @param devicetype
+     * @param devicetype 设备类型
+     * @return Startup
      */
     public Startup setDevicetype(String devicetype) {
         context.put("devicetype", devicetype);
@@ -39,7 +40,8 @@ public class Startup extends Model<Startup> {
     /**
      * 设置运营商
      * 
-     * @param op
+     * @param op 运营商
+     * @return Startup
      */
     public Startup setOP(String op) {
         context.put("op", op);
@@ -49,7 +51,8 @@ public class Startup extends Model<Startup> {
     /**
      * 设置网络制式 2G,3G,WIFI
      * 
-     * @param network
+     * @param network 网络制式
+     * @return Startup
      */
     public Startup setNetwork(String network) {
         context.put("network", network);
@@ -59,7 +62,8 @@ public class Startup extends Model<Startup> {
     /**
      * 设置操作系统
      * 
-     * @param os
+     * @param os 操作系统
+     * @return Startup
      */
     public Startup setOS(String os) {
         context.put("os", os);
@@ -69,7 +73,8 @@ public class Startup extends Model<Startup> {
     /**
      * 设置分辨率
      * 
-     * @param resolution
+     * @param resolution 分辨率
+     * @return Startup
      */
     public Startup setResolution(String resolution) {
         context.put("resolution", resolution);
