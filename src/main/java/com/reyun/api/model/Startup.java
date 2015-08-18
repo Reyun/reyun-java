@@ -17,37 +17,6 @@ public class Startup extends Model<Startup> {
     }
 
     /**
-     * 设置设备id
-     * 
-     * @param deviceid
-     */
-    public Startup setDeviceid(String deviceid) {
-        context.put("deviceid", deviceid);
-        return this;
-    }
-
-    /**
-     * 设置时间 yyyy-MM-dd HH:mm:ss
-     * 
-     * @param when
-     * @return
-     */
-    public Startup setWhen(String when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
-     * 设置渠道id
-     * 
-     * @param channelid
-     */
-    public Startup setChannelid(String channelid) {
-        context.put("channelid", channelid);
-        return this;
-    }
-
-    /**
      * 设置时区
      * 
      * @param tz

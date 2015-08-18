@@ -17,27 +17,6 @@ public class Payment extends Model<Payment> {
     }
 
     /**
-     * 设置设备id
-     * 
-     * @param deviceid
-     */
-    public Payment setDeviceid(String deviceid) {
-        context.put("deviceid", deviceid);
-        return this;
-    }
-
-    /**
-     * 设置时间 yyyy-MM-dd HH:mm:ss
-     * 
-     * @param when
-     * @return
-     */
-    public Payment setWhen(String when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
      * 设置账户ID
      * 
      * @param who
@@ -124,16 +103,6 @@ public class Payment extends Model<Payment> {
      */
     public Payment setServerid(String serverid) {
         context.put("serverid", serverid);
-        return this;
-    }
-
-    /**
-     * 设置渠道id
-     * 
-     * @param channelid
-     */
-    public Payment setChannelid(String channelid) {
-        context.put("channelid", channelid);
         return this;
     }
 

@@ -19,27 +19,6 @@ public class Event extends Model<Event> {
     }
 
     /**
-     * 设置设备id
-     * 
-     * @param deviceid
-     */
-    public Event setDeviceid(String deviceid) {
-        context.put("deviceid", deviceid);
-        return this;
-    }
-
-    /**
-     * 设置时间 yyyy-MM-dd HH:mm:ss
-     * 
-     * @param when
-     * @return
-     */
-    public Event setWhen(String when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
      * 设置账户ID
      * 
      * @param who
@@ -66,16 +45,6 @@ public class Event extends Model<Event> {
      */
     public Event setServerid(String serverid) {
         context.put("serverid", serverid);
-        return this;
-    }
-
-    /**
-     * 设置渠道id
-     * 
-     * @param channelid
-     */
-    public Event setChannelid(String channelid) {
-        context.put("channelid", channelid);
         return this;
     }
 

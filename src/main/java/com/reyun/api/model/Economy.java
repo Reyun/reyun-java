@@ -17,27 +17,6 @@ public class Economy extends Model<Economy> {
     }
 
     /**
-     * 设置设备id
-     * 
-     * @param deviceid
-     */
-    public Economy setDeviceid(String deviceid) {
-        context.put("deviceid", deviceid);
-        return this;
-    }
-
-    /**
-     * 设置时间 yyyy-MM-dd HH:mm:ss
-     * 
-     * @param when
-     * @return
-     */
-    public Economy setWhen(String when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
      * 设置账户ID
      * 
      * @param who
@@ -84,16 +63,6 @@ public class Economy extends Model<Economy> {
      */
     public Economy setServerid(String serverid) {
         context.put("serverid", serverid);
-        return this;
-    }
-
-    /**
-     * 设置渠道id
-     * 
-     * @param channelid
-     */
-    public Economy setChannelid(String channelid) {
-        context.put("channelid", channelid);
         return this;
     }
 

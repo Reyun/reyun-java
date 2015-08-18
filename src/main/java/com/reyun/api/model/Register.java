@@ -18,27 +18,6 @@ public class Register extends Model<Register> {
     }
 
     /**
-     * 设置设备id
-     * 
-     * @param deviceid
-     */
-    public Register setDeviceid(String deviceid) {
-        context.put("deviceid", deviceid);
-        return this;
-    }
-
-    /**
-     * 设置时间 yyyy-MM-dd HH:mm:ss
-     * 
-     * @param when
-     * @return
-     */
-    public Register setWhen(String when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
      * 设置账户ID
      * 
      * @param who
@@ -85,16 +64,6 @@ public class Register extends Model<Register> {
      */
     public Register setServerid(String serverid) {
         context.put("serverid", serverid);
-        return this;
-    }
-
-    /**
-     * 设置渠道id
-     * 
-     * @param channelid
-     */
-    public Register setChannelid(String channelid) {
-        context.put("channelid", channelid);
         return this;
     }
 

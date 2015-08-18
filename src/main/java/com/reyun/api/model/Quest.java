@@ -18,27 +18,6 @@ public class Quest extends Model<Quest> {
     }
 
     /**
-     * 设置设备id
-     * 
-     * @param deviceid
-     */
-    public Quest setDeviceid(String deviceid) {
-        context.put("deviceid", deviceid);
-        return this;
-    }
-
-    /**
-     * 设置时间 yyyy-MM-dd HH:mm:ss
-     * 
-     * @param when
-     * @return
-     */
-    public Quest setWhen(String when) {
-        this.when = when;
-        return this;
-    }
-
-    /**
      * 设置账户ID
      * 
      * @param who
@@ -85,16 +64,6 @@ public class Quest extends Model<Quest> {
      */
     public Quest setServerid(String serverid) {
         context.put("serverid", serverid);
-        return this;
-    }
-
-    /**
-     * 设置渠道id
-     * 
-     * @param channelid
-     */
-    public Quest setChannelid(String channelid) {
-        context.put("channelid", channelid);
         return this;
     }
 
