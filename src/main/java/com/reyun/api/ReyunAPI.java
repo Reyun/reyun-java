@@ -26,8 +26,8 @@ public class ReyunAPI {
 
     private static ReyunAPI instance;
 
-    private ReyunAPI(String appkey, int timeout) {
-        if (!ValidateUtil.isValid(appkey)) {
+    private ReyunAPI(String appkey, int timeout) throws AppidNotValidException {
+        if ( ! ValidateUtil.isValid(appkey)) {
             throw new AppidNotValidException();
         }
         this.appkey = appkey;
@@ -41,7 +41,7 @@ public class ReyunAPI {
      *            游戏appkey
      * @return ReyunAPI
      */
-    public static final ReyunAPI getInstance(String appkey) {
+    public static final ReyunAPI getInstance(String appkey) throws AppidNotValidException {
         return getInstance(appkey, 2000);
     }
 
@@ -54,14 +54,14 @@ public class ReyunAPI {
      *            http连接超时时间
      * @return ReyunAPI
      */
-    public static final ReyunAPI getInstance(String appkey, int timeout) {
+    public static final ReyunAPI getInstance(String appkey, int timeout) throws AppidNotValidException {
         if (null == instance) {
             syncInit(appkey, timeout);
         }
         return instance;
     }
 
-    private static synchronized void syncInit(String appkey, int timeout) {
+    private static synchronized void syncInit(String appkey, int timeout) throws AppidNotValidException {
         if (instance == null) {
             instance = new ReyunAPI(appkey, timeout);
         }
